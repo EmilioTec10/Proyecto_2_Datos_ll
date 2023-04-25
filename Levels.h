@@ -4,6 +4,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QPixmap>
+#include "Pac_Man.h"
 
 class Levels:public QGraphicsView{
 
@@ -17,6 +18,8 @@ public:
     QPixmap m_labyrinthPixmap;
     QGraphicsPixmapItem* m_labyrinthPixmapItems[LABYRINTH_WIDTH][LABYRINTH_HEIGHT];
     QPixmap m_labyrinthPixmaps[32];
+
+    Pac_Man *pac_man;
 
     QGraphicsScene * scene;
 private:

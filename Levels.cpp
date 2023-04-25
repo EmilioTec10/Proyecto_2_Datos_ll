@@ -4,24 +4,24 @@
 
 char mapa[21][31] = {
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X           XXXXX           X",
-    "X           XXXXX           X",
-    "X XXX XXXX         XXXX XXX X",
-    "X XXX XXXX  XXXXX  XXXX XXX X",
-    "X                           X",
-    "X                           X",
     "X            XXX            X",
-    "XXXXXXX              XXXXXXXX",
+    "X XXXXX XXXX XXX XXXX XXXXX X",
+    "X                           X",
+    "X XXX XXXXX XXXXX XXXXX XXX X",
+    "X                           X",
+    "X                           X",
+    "XXXXXXX     XXXXXX   XXXXXXXX",
+    "XXXXXXX          X   XXXXXXXX",
+    "X           XXXXXX          X",
+    "X           X        XXX X  X",
     "X           XXXXX           X",
-    "X           XXXXX           X",
-    "XXXXXXX              XXXXXXXX",
     "X            XXX            X",
     "X                           X",
-    "X                           X",
-    "X                           X",
-    "X XXX XXXX  XXXXX  XXXX XXX X",
-    "X XXX XXXX         XXXX XXX X",
     "X           XXXXX           X",
+    "X             X             X",
+    "X                           X",
+    "X XXXXX XXXX XXX XXXX XXXXX X",
+    "X            XXX            X",
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 };
 
@@ -34,6 +34,14 @@ Levels::Levels(QWidget *parent)
     QFont font("Arial", 15, QFont::Helvetica);
 
     init_lab();
+
+    pac_man = new Pac_Man();
+
+    scene->addItem(pac_man);
+
+    pac_man->setFlag(QGraphicsItem::ItemIsFocusable);
+    pac_man->setFocus();
+    pac_man->setPos(880/2,600/2);
 
     setScene(scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

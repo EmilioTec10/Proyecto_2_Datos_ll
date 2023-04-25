@@ -1,5 +1,14 @@
 <RCC>
     <qresource prefix="/Images">
         <file>block (1).png</file>
+        <file>pac_man_0R.png</file>
+        <file>pac_man_1R.png</file>
+        <file>pac_man_2.png</file>
+        <file>pac_man_1U.png</file>
+        <file>pac_man_0L.png</file>
+        <file>pac_man_0D.png</file>
+        <file>pac_man_0U.png</file>
+        <file>pac_man_1L.png</file>
+        <file>pac_man_1D.png</file>
     </qresource>
 </RCC>

@@ -18,6 +18,8 @@ set(PROJECT_SOURCES
         Main_Window.cpp
         Levels.h
         Levels.cpp
+        Pac_Man.h
+        Pac_Man.cpp
         Resources.qrc
 
 )
