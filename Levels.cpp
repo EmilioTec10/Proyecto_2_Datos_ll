@@ -6,30 +6,6 @@
 #include <QGraphicsRectItem>
 #include <iostream>
 
-char mapa[21][30] = {
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    "X            XXX            X",
-    "X XXXXX XXXX XXX XXXX XXXXX X",
-    "X                           X",
-    "X XXX XXXXX XXXXX XXXXX XXX X",
-    "X XXX X               X XXX X",
-    "X XXX X XXXXXXXXXXXXX X XXX X",
-    "X XXX X X           X X XXX X",
-    "X XXX X X XXXXXXXXX X X XXX X",
-    "X XXX X X X       X X X XXX X",
-    "X                           X",
-    "X XXX X X XXXXXXXXX X X XXX X",
-    "X XXX X X           X X XXX X",
-    "X XXX X X XXXXXXXXX X X XXX X",
-    "X XXX X X           X X XXX X",
-    "X XXX X X XXXXXXXXX X X XXX X",
-    "X                           X",
-    "X XXX X XXXX XXX XXXX XXXXX X",
-    "X            XXX            X",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-};
-
-
 Levels::Levels(QWidget *parent)
 {
     //Creation and configuration of the scene
@@ -59,6 +35,7 @@ Levels::Levels(QWidget *parent)
     ghost->setPos(810,30);
 
     pac_man->set_points_label(points_label);
+    //pac_man->set_mapa(mapa);
     pac_man->setFlag(QGraphicsItem::ItemIsFocusable);
     pac_man->setFocus();
     pac_man->setPos(420,600/2);

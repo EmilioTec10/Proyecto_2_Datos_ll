@@ -1,5 +1,4 @@
 #include "Pac_Man.h"
-#include "Blocks.h"
 #include "Dots.h"
 #include "qgraphicsscene.h"
 #include <QTimer>
@@ -49,6 +48,17 @@ void Pac_Man::set_points_label(QGraphicsTextItem *points_label)
 {
     this->points_label = points_label;
 }
+/*
+void Pac_Man::set_mapa(char mapa[21][30])
+{
+    for (int i = 0;i < 21;i++){
+        for(int j = 0;j < 30;j++){
+            this->mapa[i][j] = mapa[i][j];
+            qDebug() << mapa[i][j];
+        }
+    }
+}
+*/
 
 void Pac_Man::check_collision()
 {
@@ -66,30 +76,28 @@ void Pac_Man::check_collision()
 
 void Pac_Man::move()
 {
-    QList<QGraphicsItem *> colliding_items = collidingItems(); //List of the colliding items
-    for (int i = 0, n = colliding_items.size(); i < n; ++i){
-        if (typeid(*(colliding_items[i])) == typeid(Block)){
-            return;
-        }
-    }
     if (direcction == 'R'){
-        if (x() < 810){
+        if (x() < 810 && mapa[position_x][position_y + 1] != 'X'){
             setPos(x() + speed,y());
+            position_y++;
         }
     }
     else if (direcction == 'L'){
-        if (x() > 30){
+        if (x() > 30 && mapa[position_x][position_y - 1] != 'X'){
             setPos(x() - speed,y());
+            position_y--;
         }
     }
     else if (direcction == 'U'){
-        if (y() > 30){
+        if (y() > 30 && mapa[position_x - 1][position_y] != 'X'){
             setPos(x(),y() - speed);
+            position_x--;
         }
     }
     else if (direcction == 'D'){
-        if (y() < 540){
+        if (y() < 540 && mapa[position_x + 1][position_y] != 'X'){
             setPos(x(),y() + speed);
+            position_x++;
         }
     }
 }
