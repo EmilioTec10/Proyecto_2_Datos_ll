@@ -23,7 +23,10 @@ Levels::Levels(QWidget *parent)
     connect(col,SIGNAL(timeout()),pac_man,SLOT(check_collision()));
     col->start(100);
 
-    points_label = new QGraphicsTextItem("Points: " + QString::number(points));
+    connect(timer_points, SIGNAL(timeout()),pac_man, SLOT(check_points()));
+    timer_points->start(500);
+
+    points_label = new QGraphicsTextItem("Points: " + QString::number(0));
     points_label->setFont(font);
     points_label->setDefaultTextColor(Qt::red);
 
@@ -35,7 +38,7 @@ Levels::Levels(QWidget *parent)
     ghost->setPos(810,30);
 
     pac_man->set_points_label(points_label);
-    //pac_man->set_mapa(mapa);
+    pac_man->set_mapa(mapa);
     pac_man->setFlag(QGraphicsItem::ItemIsFocusable);
     pac_man->setFocus();
     pac_man->setPos(420,600/2);
@@ -70,7 +73,7 @@ void Levels::init_lab()
             }
             else if (mapa[i][j] == ' '){
                 Dot *dot = new Dot();
-                dot->setPos(j*30, i*30);
+                dot->setPos((j*30)+10, (i*30)+10);
                 scene->addItem(dot);
             }
 

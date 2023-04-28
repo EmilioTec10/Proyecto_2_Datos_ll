@@ -9,7 +9,7 @@ class Pac_Man: public QObject , public  QGraphicsPixmapItem{
 public:
 
     Pac_Man();
-    bool super_pastilla = false;
+    bool super_dot = false;
     int speed = 30;
     int points = 0;
     char direcction = 'R';
@@ -24,34 +24,15 @@ public:
 public slots:
     void check_collision();
     void move();
+    void check_points();
     void animation_R();
     void animation_L();
     void animation_U();
     void animation_D();
 private:
     QGraphicsTextItem *points_label;
-    char mapa[21][30] = {
-        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-        "X            XXX            X",
-        "X XXXXX XXXX XXX XXXX XXXXX X",
-        "X                           X",
-        "X XXX XXXXX XXXXX XXXXX XXX X",
-        "X XXX X               X XXX X",
-        "X XXX X XXXXXXXXXXXXX X XXX X",
-        "X XXX X X           X X XXX X",
-        "X XXX X X XXXXXXXXX X X XXX X",
-        "X XXX X X X       X X X XXX X",
-        "X                           X",
-        "X XXX X X XXXXXXXXX X X XXX X",
-        "X XXX X X           X X XXX X",
-        "X XXX X X XXXXXXXXX X X XXX X",
-        "X XXX X X           X X XXX X",
-        "X XXX X X XXXXXXXXX X X XXX X",
-        "X                           X",
-        "X XXX X XXXX XXX XXXX XXXXX X",
-        "X            XXX            X",
-        "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    };
+    char mapa[21][30];
+    int lifes = 3;
 };
 
 #endif // PAC_MAN_H

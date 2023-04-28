@@ -38,18 +38,21 @@ public:
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     };
 
+    void setPoints(int points);
+
     QPixmap m_labyrinthPixmap;
     QGraphicsPixmapItem* m_labyrinthPixmapItems[LABYRINTH_WIDTH][LABYRINTH_HEIGHT];
     QPixmap m_labyrinthPixmaps[32];
+
+    QTimer *timer_points = new QTimer();
 
     Pac_Man *pac_man;
 
     QGraphicsTextItem *points_label;
 
-    QGraphicsScene * scene;
+    QGraphicsScene * scene;;
 private:
     void init_lab();
-    int points = 0;
 };
 
 #endif // LEVELS_H

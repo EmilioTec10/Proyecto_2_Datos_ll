@@ -4,7 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 
-class Ghost:public QGraphicsPixmapItem,public QObject{
+class Ghost:public QObject , public  QGraphicsPixmapItem{
+    Q_OBJECT
 public:
     Ghost();
 public slots:

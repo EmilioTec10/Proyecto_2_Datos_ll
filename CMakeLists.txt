@@ -26,6 +26,8 @@ set(PROJECT_SOURCES
         Blocks.cpp
         Ghost.h
         Ghost.cpp
+        SuperDot.h
+        SuperDot.cpp
         Resources.qrc
 
 )

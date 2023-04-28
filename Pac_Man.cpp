@@ -1,5 +1,7 @@
 #include "Pac_Man.h"
 #include "Dots.h"
+#include "SuperDot.h"
+#include "Ghost.h"
 #include "qgraphicsscene.h"
 #include <QTimer>
 #include <QKeyEvent>
@@ -48,7 +50,7 @@ void Pac_Man::set_points_label(QGraphicsTextItem *points_label)
 {
     this->points_label = points_label;
 }
-/*
+
 void Pac_Man::set_mapa(char mapa[21][30])
 {
     for (int i = 0;i < 21;i++){
@@ -58,7 +60,7 @@ void Pac_Man::set_mapa(char mapa[21][30])
         }
     }
 }
-*/
+
 
 void Pac_Man::check_collision()
 {
@@ -71,8 +73,30 @@ void Pac_Man::check_collision()
             points_label->setPlainText("Points: " + QString::number(points));
             return;
         }
+        else if (typeid(*(colliding_items[i])) == typeid(SuperDot)){
+            scene()->removeItem(colliding_items[i]);
+            delete colliding_items[i];
+            super_dot = true;
+            return;
+        }
+        else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
+            scene()->removeItem(this);
+            lifes--;
+            return;
+        }
     }
 }
+
+void Pac_Man::check_points()
+{
+    if (points % 200 == 0){
+
+        SuperDot *super_dot = new SuperDot();
+        scene()->addItem(super_dot);
+        super_dot->setPos(420,600/2);
+    }
+}
+
 
 void Pac_Man::move()
 {

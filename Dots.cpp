@@ -3,6 +3,6 @@
 
 Dot::Dot()
 {
-    setPixmap(QPixmap(":/Images/dot.png"));
+    setPixmap(QPixmap(":/Images/Dot.png"));
 }
 
