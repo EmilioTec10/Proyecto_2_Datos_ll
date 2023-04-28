@@ -1,4 +1,7 @@
 #include "Pac_Man.h"
+#include "Blocks.h"
+#include "Dots.h"
+#include "qgraphicsscene.h"
 #include <QTimer>
 #include <QKeyEvent>
 #include <QDebug>
@@ -11,7 +14,8 @@ Pac_Man::Pac_Man()
 
     QTimer *timer_move = new QTimer;
     connect(timer_move,SIGNAL(timeout()),this,SLOT(move())); //conect method that repeats the method everytime it recives the signal
-    timer_move->start(50); //Signal every 50 miliseconds
+    timer_move->start(500); //Signal every 50 miliseconds
+
 
     connect(timer_animation,SIGNAL(timeout()),this,SLOT(animation_R())); //conect method that repeats the method everytime it recives the signal
     timer_animation->start(150); //Signal every 50 miliseconds
@@ -41,8 +45,33 @@ void Pac_Man::keyPressEvent(QKeyEvent *event)
     }
 }
 
+void Pac_Man::set_points_label(QGraphicsTextItem *points_label)
+{
+    this->points_label = points_label;
+}
+
+void Pac_Man::check_collision()
+{
+    QList<QGraphicsItem *> colliding_items = collidingItems(); //List of the colliding items
+    for (int i = 0, n = colliding_items.size(); i < n; ++i){
+        if (typeid(*(colliding_items[i])) == typeid(Dot)){
+            scene()->removeItem(colliding_items[i]);
+            delete colliding_items[i];
+            points += 10;
+            points_label->setPlainText("Points: " + QString::number(points));
+            return;
+        }
+    }
+}
+
 void Pac_Man::move()
 {
+    QList<QGraphicsItem *> colliding_items = collidingItems(); //List of the colliding items
+    for (int i = 0, n = colliding_items.size(); i < n; ++i){
+        if (typeid(*(colliding_items[i])) == typeid(Block)){
+            return;
+        }
+    }
     if (direcction == 'R'){
         if (x() < 810){
             setPos(x() + speed,y());

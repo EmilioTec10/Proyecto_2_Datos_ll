@@ -21,9 +21,12 @@ public:
 
     Pac_Man *pac_man;
 
+    QGraphicsTextItem *points_label;
+
     QGraphicsScene * scene;
 private:
     void init_lab();
+    int points = 0;
 };
 
 #endif // LEVELS_H

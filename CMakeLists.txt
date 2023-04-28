@@ -20,6 +20,12 @@ set(PROJECT_SOURCES
         Levels.cpp
         Pac_Man.h
         Pac_Man.cpp
+        Dots.h
+        Dots.cpp
+        Blocks.h
+        Blocks.cpp
+        Ghost.h
+        Ghost.cpp
         Resources.qrc
 
 )

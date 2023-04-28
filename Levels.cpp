@@ -1,26 +1,30 @@
 #include "Levels.h"
+#include "Blocks.h"
+#include "Ghost.h"
+#include "Dots.h"
+#include <QTimer>
 #include <QGraphicsRectItem>
 #include <iostream>
 
-char mapa[21][31] = {
+char mapa[21][30] = {
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     "X            XXX            X",
     "X XXXXX XXXX XXX XXXX XXXXX X",
     "X                           X",
     "X XXX XXXXX XXXXX XXXXX XXX X",
+    "X XXX X               X XXX X",
+    "X XXX X XXXXXXXXXXXXX X XXX X",
+    "X XXX X X           X X XXX X",
+    "X XXX X X XXXXXXXXX X X XXX X",
+    "X XXX X X X       X X X XXX X",
     "X                           X",
+    "X XXX X X XXXXXXXXX X X XXX X",
+    "X XXX X X           X X XXX X",
+    "X XXX X X XXXXXXXXX X X XXX X",
+    "X XXX X X           X X XXX X",
+    "X XXX X X XXXXXXXXX X X XXX X",
     "X                           X",
-    "XXXXXXX     XXXXXX   XXXXXXXX",
-    "XXXXXXX          X   XXXXXXXX",
-    "X           XXXXXX          X",
-    "X           X        XXX X  X",
-    "X           XXXXX           X",
-    "X            XXX            X",
-    "X                           X",
-    "X           XXXXX           X",
-    "X             X             X",
-    "X                           X",
-    "X XXXXX XXXX XXX XXXX XXXXX X",
+    "X XXX X XXXX XXX XXXX XXXXX X",
     "X            XXX            X",
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
 };
@@ -30,23 +34,39 @@ Levels::Levels(QWidget *parent)
 {
     //Creation and configuration of the scene
     scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,880,600);
+    scene->setSceneRect(0,0,870,620);
+    scene->setBackgroundBrush(QBrush(QImage(":/Images/back.png")));
     QFont font("Arial", 15, QFont::Helvetica);
 
     init_lab();
 
     pac_man = new Pac_Man();
+    Ghost *ghost = new Ghost();
+
+    QTimer *col = new QTimer();
+    connect(col,SIGNAL(timeout()),pac_man,SLOT(check_collision()));
+    col->start(100);
+
+    points_label = new QGraphicsTextItem("Points: " + QString::number(points));
+    points_label->setFont(font);
+    points_label->setDefaultTextColor(Qt::red);
 
     scene->addItem(pac_man);
+    scene->addItem(ghost);
+    scene->addItem(points_label);
 
+    points_label->setPos(720,590);
+    ghost->setPos(810,30);
+
+    pac_man->set_points_label(points_label);
     pac_man->setFlag(QGraphicsItem::ItemIsFocusable);
     pac_man->setFocus();
-    pac_man->setPos(880/2,600/2);
+    pac_man->setPos(420,600/2);
 
     setScene(scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(880,600);
+    setFixedSize(870,620);
 
 }
 
@@ -67,10 +87,14 @@ void Levels::init_lab()
         for (int j = 0; j < int(31); j++)
         {
             if (mapa[i][j] == 'X'){
-                m_labyrinthPixmapItems[i][j] =  new QGraphicsPixmapItem();
-                m_labyrinthPixmapItems[i][j]->setPixmap(QPixmap(":/Images/block (1).png"));
-                m_labyrinthPixmapItems[i][j]->setPos(j*30, i*30);
-                scene->addItem(m_labyrinthPixmapItems[i][j]);
+                Block *block = new Block();
+                block->setPos(j*30, i*30);
+                scene->addItem(block);
+            }
+            else if (mapa[i][j] == ' '){
+                Dot *dot = new Dot();
+                dot->setPos(j*30, i*30);
+                scene->addItem(dot);
             }
 
         }

@@ -10,5 +10,12 @@
         <file>pac_man_0U.png</file>
         <file>pac_man_1L.png</file>
         <file>pac_man_1D.png</file>
+        <file>dot.png</file>
+        <file>back.png</file>
+        <file>GhostU.png</file>
+        <file>GhostT.png</file>
+        <file>GhostR.png</file>
+        <file>GhostL.png</file>
+        <file>GhostD.png</file>
     </qresource>
 </RCC>
