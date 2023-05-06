@@ -28,6 +28,12 @@ set(PROJECT_SOURCES
         Ghost.cpp
         SuperDot.h
         SuperDot.cpp
+        Level2.cpp
+        Level2.h
+        Level3.h
+        Level3.cpp
+        Level4.h
+        Level4.cpp
         Resources.qrc
 
 )

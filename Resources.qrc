@@ -18,5 +18,13 @@
         <file>GhostL.png</file>
         <file>GhostD.png</file>
         <file>Dot.png</file>
+        <file>D8png</file>
+        <file>D7.png</file>
+        <file>D6.png</file>
+        <file>D5.png</file>
+        <file>D4.png</file>
+        <file>D3.png</file>
+        <file>D2.png</file>
+        <file>D1.png</file>
     </qresource>
 </RCC>

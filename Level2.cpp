@@ -1,4 +1,3 @@
-#include "Levels.h"
 #include "Level2.h"
 #include "Blocks.h"
 #include "Ghost.h"
@@ -8,7 +7,7 @@
 #include <QGraphicsRectItem>
 #include <iostream>
 
-Levels::Levels(QWidget *parent)
+Level2::Level2(QWidget *parent)
 {
     //Creation and configuration of the scene
     scene = new QGraphicsScene();
@@ -25,9 +24,11 @@ Levels::Levels(QWidget *parent)
     connect(col,SIGNAL(timeout()),this,SLOT(check_collision()));
     col->start(100);
 
+    /*
     timer_level = new QTimer();
     connect(timer_level,SIGNAL(timeout()),this,SLOT(check_win()));
     timer_level->start(800);
+    */
 
     connect(timer_points, SIGNAL(timeout()),this, SLOT(check_points()));
     timer_points->start(500);
@@ -63,19 +64,42 @@ Levels::Levels(QWidget *parent)
 
 }
 
-void Levels::check_win()
+void Level2::setPoints(int points)
+{
+    this->points = points;
+}
+
+void Level2::check_win()
 {
     if (pillows == 0){
-        timer_level->stop();
-        timer_points->stop();
-        this->close();
-        Level2 *level2 = new Level2();
-        level2->setPoints(points);
-        level2->show();
+        if (level == 2){
+            delete pac_man;
+            delete ghost;
+            delete points_label;
+            delete lifes_label;
+            delete timer_points;
+            delete timer_level;
+            delete col;
+            scene->clear();
+           for (int i = 0;i < 21;i++){
+               for (int j = 0;j < 30;i++){
+                   mapa[i][j] = ' ';
+               }
+           }
+           init_level();
+           level++;
+
+        }
+        else if (level == 3){
+
+        }
+        else if (level == 4){
+
+        }
     }
 }
 
-void Levels::check_collision()
+void Level2::check_collision()
 {
     QList<QGraphicsItem *> colliding_items = pac_man->collidingItems(); //List of the colliding items
     for (int i = 0, n = colliding_items.size(); i < n; ++i){
@@ -90,28 +114,21 @@ void Levels::check_collision()
         else if (typeid(*(colliding_items[i])) == typeid(SuperDot)){
             scene->removeItem(colliding_items[i]);
             delete colliding_items[i];
-            points += 50;
-            ghost->super_pillow();
+            pac_man->super_dot = true;
             return;
         }
         else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
-            if (ghost->superpillow == false){
-                pac_man->lifes--;
-                pac_man->position_x = 10;
-                pac_man->position_y = 14;
-                pac_man->setPos(420,600/2);
-                lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
-                return;
-            }
-            else {
-                ghost->setPos(810,30);
-                return;
-            }
+            pac_man->lifes--;
+            pac_man->position_x = 10;
+            pac_man->position_y = 14;
+            pac_man->setPos(420,600/2);
+            lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
+            return;
         }
     }
 }
 
-void Levels::check_points()
+void Level2::check_points()
 {
     if (points % 200 == 0){
 
@@ -121,7 +138,7 @@ void Levels::check_points()
     }
 }
 
-void Levels::init_level()
+void Level2::init_level()
 {
 
     int index = 0;

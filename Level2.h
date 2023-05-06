@@ -1,5 +1,5 @@
-#ifndef LEVELS_H
-#define LEVELS_H
+#ifndef LEVEL2_H
+#define LEVEL2_H
 
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -7,11 +7,11 @@
 #include "Pac_Man.h"
 #include "Ghost.h"
 
-class Levels:public QGraphicsView{
+class Level2:public QGraphicsView{
     Q_OBJECT
 public:
 
-    Levels(QWidget * parent=0);
+    Level2(QWidget * parent=0);
 
     static const uint LABYRINTH_WIDTH  = 21;
     static const uint LABYRINTH_HEIGHT = 31;
@@ -63,10 +63,10 @@ public slots:
     void check_points();
 private:
     int pillows = 0;
-    int points = 0;
     int level = 2;
+    int points = 0;
     void init_level();
     void changemap();
 };
 
-#endif // LEVELS_H
+#endif // LEVEL2_H

@@ -1,11 +1,9 @@
 #include "Pac_Man.h"
-#include "Dots.h"
-#include "SuperDot.h"
-#include "Ghost.h"
 #include "qgraphicsscene.h"
 #include <QTimer>
 #include <QKeyEvent>
 #include <QDebug>
+#include <iostream>
 
 int cycle = 0;
 
@@ -13,7 +11,7 @@ Pac_Man::Pac_Man()
 {
     setPixmap(QPixmap(":/Images/pac_man_0R.png"));
 
-    QTimer *timer_move = new QTimer;
+    timer_move = new QTimer;
     connect(timer_move,SIGNAL(timeout()),this,SLOT(move())); //conect method that repeats the method everytime it recives the signal
     timer_move->start(500); //Signal every 50 miliseconds
 
@@ -21,6 +19,8 @@ Pac_Man::Pac_Man()
     connect(timer_animation,SIGNAL(timeout()),this,SLOT(animation_R())); //conect method that repeats the method everytime it recives the signal
     timer_animation->start(150); //Signal every 50 miliseconds
 }
+
+
 
 void Pac_Man::keyPressEvent(QKeyEvent *event)
 {
@@ -51,52 +51,27 @@ void Pac_Man::set_points_label(QGraphicsTextItem *points_label)
     this->points_label = points_label;
 }
 
+void Pac_Man::set_lifes_label(QGraphicsTextItem *lifes_label)
+{
+    this->lifes_label = lifes_label;
+}
+
 void Pac_Man::set_mapa(char mapa[21][30])
 {
     for (int i = 0;i < 21;i++){
         for(int j = 0;j < 30;j++){
             this->mapa[i][j] = mapa[i][j];
-            qDebug() << mapa[i][j];
         }
     }
 }
 
-
-void Pac_Man::check_collision()
+void Pac_Man::revive()
 {
-    QList<QGraphicsItem *> colliding_items = collidingItems(); //List of the colliding items
-    for (int i = 0, n = colliding_items.size(); i < n; ++i){
-        if (typeid(*(colliding_items[i])) == typeid(Dot)){
-            scene()->removeItem(colliding_items[i]);
-            delete colliding_items[i];
-            points += 10;
-            points_label->setPlainText("Points: " + QString::number(points));
-            return;
-        }
-        else if (typeid(*(colliding_items[i])) == typeid(SuperDot)){
-            scene()->removeItem(colliding_items[i]);
-            delete colliding_items[i];
-            super_dot = true;
-            return;
-        }
-        else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
-            scene()->removeItem(this);
-            lifes--;
-            return;
-        }
-    }
+    Pac_Man *pac_man = new Pac_Man();
+    pac_man->setPos(420,600/2);
+    scene()->addItem(pac_man);
+    die_timer->stop();
 }
-
-void Pac_Man::check_points()
-{
-    if (points % 200 == 0){
-
-        SuperDot *super_dot = new SuperDot();
-        scene()->addItem(super_dot);
-        super_dot->setPos(420,600/2);
-    }
-}
-
 
 void Pac_Man::move()
 {
@@ -197,4 +172,3 @@ void Pac_Man::animation_D()
         cycle = 0;
     }
 }
-
