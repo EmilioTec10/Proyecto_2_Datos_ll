@@ -29,6 +29,10 @@ Levels::Levels(QWidget *parent)
     connect(timer_level,SIGNAL(timeout()),this,SLOT(check_win()));
     timer_level->start(800);
 
+    timer_set = new QTimer();
+    connect(timer_set,SIGNAL(timeout()),this, SLOT(set_pac_position()));
+    timer_set->start(500);
+
     connect(timer_points, SIGNAL(timeout()),this, SLOT(check_points()));
     timer_points->start(500);
 
@@ -48,6 +52,7 @@ Levels::Levels(QWidget *parent)
     points_label->setPos(720,590);
     lifes_label->setPos(600,590);
     ghost->setPos(810,30);
+    ghost->set_mapa(mapa);
 
     pac_man->set_points_label(points_label);
     pac_man->set_lifes_label(lifes_label);
@@ -119,6 +124,13 @@ void Levels::check_points()
         scene->addItem(super_dot);
         super_dot->setPos(420,600/2);
     }
+}
+
+void Levels::set_pac_position()
+{
+    ghost->setPosX_Pacman(pac_man->position_x);
+    ghost->setPosY_Pacman(pac_man->position_y);
+    ghost->set_pac_direction(pac_man->direcction);
 }
 
 void Levels::init_level()
