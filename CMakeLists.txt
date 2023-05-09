@@ -34,6 +34,8 @@ set(PROJECT_SOURCES
         Level3.cpp
         Level4.h
         Level4.cpp
+        AStar.h
+        AStar.cpp
         Resources.qrc
 
 )

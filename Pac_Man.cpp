@@ -13,7 +13,7 @@ Pac_Man::Pac_Man()
 
     timer_move = new QTimer;
     connect(timer_move,SIGNAL(timeout()),this,SLOT(move())); //conect method that repeats the method everytime it recives the signal
-    timer_move->start(80); //Signal every 50 miliseconds
+    timer_move->start(55); //Signal every 50 miliseconds
 
 
     connect(timer_animation_R,SIGNAL(timeout()),this,SLOT(animation_R())); //conect method that repeats the method everytime it recives the signal
@@ -27,7 +27,7 @@ Pac_Man::Pac_Man()
 
 void Pac_Man::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_W){
+    if (event->key() == Qt::Key_W && com_y == 0){
         direcction = 'U';
         cycle = 0;
         timer_animation_D->stop();
@@ -35,7 +35,7 @@ void Pac_Man::keyPressEvent(QKeyEvent *event)
         timer_animation_R->stop();
         timer_animation_U->start(150);
     }
-    if (event->key() == Qt::Key_S){
+    if (event->key() == Qt::Key_S && com_y == 0 ){
         direcction = 'D';
         cycle = 0;
         timer_animation_L->stop();
@@ -94,6 +94,7 @@ void Pac_Man::revive()
 
 void Pac_Man::move()
 {
+
     if (direcction == 'R'){
         if (x() < 810 && mapa[position_x][position_y + 1] != 'X'){
             setPos(x() + speed,y());
@@ -110,7 +111,6 @@ void Pac_Man::move()
             com_x -= 0.17;
             if (com_x <= -1.0){
                 position_y--;
-                qDebug() << position_y;
                 com_x = 0;
             }
         }

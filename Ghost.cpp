@@ -1,17 +1,26 @@
 #include "Ghost.h"
+#include "AStar.h"
 #include <QTimer>
 
 Ghost::Ghost()
 {
     setPixmap(QPixmap(":/Images/GhostD.png"));
+    /*
+    set_to_pacman = new QTimer();
+    connect(set_to_pacman,SIGNAL(timeout()),this,SLOT(setPos_to_pacman()));
+    set_to_pacman->start(80);
 
-    QTimer *timer_move = new QTimer;
-    connect(timer_move,SIGNAL(timeout()),this,SLOT(move())); //conect method that repeats the method everytime it recives the signal
-    timer_move->start(500); //Signal every 50 miliseconds
+    timer_move_to_pacman = new QTimer();
+    connect(timer_move_to_pacman,SIGNAL(timeout()),this,SLOT(move_to_pacman())); //conect method that repeats the method everytime it recives the signal
+    timer_move_to_pacman->start(80);
+    */
+
+    timer_move_to_pillow = new QTimer();
+    connect(timer_move_to_pillow,SIGNAL(timeout()),this,SLOT(move_to_pillow())); //conect method that repeats the method everytime it recives the signal
 
     QTimer *timer_animation = new QTimer;
     connect(timer_animation,SIGNAL(timeout()),this,SLOT(change_pix())); //conect method that repeats the method everytime it recives the signal
-    timer_animation->start(500); //Signal every 50 miliseconds
+    timer_animation->start(80); //Signal every 50 miliseconds
 }
 
 void Ghost::super_pillow()
@@ -40,6 +49,7 @@ void Ghost::set_mapa(char mapa[21][30])
             this->mapa[i][j] = mapa[i][j];
         }
     }
+    setPos_to_pillow();
 }
 
 void Ghost::set_pac_direction(char pac_direction)
@@ -47,115 +57,141 @@ void Ghost::set_pac_direction(char pac_direction)
     this->pac_direction = pac_direction;
 }
 
-void Ghost::move()
+void Ghost::setList(pair<int, int> list[])
 {
-    if (position_x == posX_Pacman){
-        if (position_y > posY_Pacman){
-            if (x() > 30 && mapa[position_x][position_y - 1] != 'X'){
-               setPos(x() - 30,y());
-               direcction = 'L';
-               position_y--;
-               return;
-            }
-            else if (y() > 30 && mapa[position_x - 1][position_y] != 'X'){
-                setPos(x(),y() - 30);
-                direcction = 'U';
-                position_x--;
-                return;
-            }
-            else if (y() < 540 && mapa[position_x + 1][position_y] != 'X'){
-                setPos(x(),y() + 30);
-                direcction = 'D';
+    for (int i = 0;i < 51;i++){
+        this->list[i] = list[i];
+    }
+}
+
+int i = 1;
+void Ghost::setPos_to_pillow(){
+    // Source is the left-most bottom-most corner
+    AStar::Pair src = make_pair(position_x, position_y);
+
+    // Destination is the left-most top-most corner
+    AStar::Pair dest = make_pair(10, 14);
+    astar->aStarSearch(mapa,src,dest);
+    setList(astar->list);
+}
+void Ghost::move_to_pillow()
+{
+    int posx = list[i].first - position_x;
+    int posy = list[i].second - position_y;
+        if (posx  == 1){
+            setPos(x(),y() + 5);
+            direcction = 'D';
+            com_y += 0.17;
+            if (com_y >= 1.0){
+                i++;
                 position_x++;
-                return;
+                com_y = 0;
             }
-            if (x() < 810 && mapa[position_x][position_y + 1] != 'X'){
-               setPos(x() + 30,y());
-               direcction = 'R';
-               position_y++;
-               return;
-            }
+            return;
         }
-        else if (position_y < posY_Pacman){
-            if (x() < 810 && mapa[position_x][position_y + 1] != 'X'){
-               setPos(x() + 30,y());
-               direcction = 'R';
-               position_y++;
-               return;
-            }
-            else if (y() > 30 && mapa[position_x - 1][position_y] != 'X'){
-                setPos(x(),y() - 30);
-                direcction = 'U';
+        if (posx  == -1){
+            setPos(x(),y() - 5);
+            direcction = 'U';
+            com_y -= 0.17;
+            if (com_y <= -1.0){
+                i++;
                 position_x--;
-                return;
+                com_y = 0;
             }
-            else if (y() < 540 && mapa[position_x + 1][position_y] != 'X'){
-                setPos(x(),y() + 30);
-                direcction = 'D';
-                position_x++;
-                return;
+            return;
+        }
+        if (posy  == 1){
+            setPos(x() + 5,y());
+            direcction = 'R';
+            com_x += 0.17;
+            if (com_x >= 1.0){
+                i++;
+                position_y++;
+                com_x = 0;
             }
-            else if (x() > 30 && mapa[position_x][position_y - 1] != 'X'){
-                setPos(x() - 30,y());
-                direcction = 'L';
+            return;
+        }
+        if (posy == -1){
+            setPos(x() - 5,y());
+            direcction = 'L';
+            com_x -= 0.17;
+            if (com_x <= -1.0){
+                i++;
                 position_y--;
-                return;
-             }
+                com_x = 0;
+            }
+            return;
         }
-    }
-    else if (position_x < posX_Pacman){
-        if (y() < 540 && mapa[position_x + 1][position_y] != 'X'){
-            setPos(x(),y() + 30);
+        else{
+            return;
+        }
+
+
+}
+
+void Ghost::move_to_pacman()
+{
+    int posx = list[i].first - position_x;
+    int posy = list[i].second - position_y;
+        if (posx  == 1){
+            setPos(x(),y() + 5);
             direcction = 'D';
-            position_x++;
+            com_y += 0.17;
+            if (com_y >= 1.0){
+                i++;
+                position_x++;
+                com_y = 0;
+            }
             return;
         }
-        else if (pac_direction == 'R' && x() < 810 && mapa[position_x][position_y + 1] != 'X'){
-            setPos(x() + 30,y());
-            direcction = 'R';
-            position_y++;
-            return;
-        }
-        else if (pac_direction == 'L' && x() > 30 && mapa[position_x][position_y - 1] != 'X'){
-            setPos(x() - 30,y());
-            direcction = 'L';
-            position_y--;
-            return;
-        }
-        else if (y() > 30 && mapa[position_x - 1][position_y] != 'X'){
-            setPos(x(),y() - 30);
+        if (posx  == -1){
+            setPos(x(),y() - 5);
             direcction = 'U';
-            position_x--;
+            com_y -= 0.17;
+            if (com_y <= -1.0){
+                i++;
+                position_x--;
+                com_y = 0;
+            }
             return;
         }
-    }
-    else {
-        qDebug() << mapa[position_x][position_y - 1];
-        if (y() > 30 && mapa[position_x - 1][position_y] != 'X'){
-            setPos(x(),y() - 30);
-            direcction = 'U';
-            position_x--;
-            return;
-        }
-        else if (x() > 30 && mapa[position_x][position_y - 1] != 'X'){
-            setPos(x() - 30,y());
-            direcction = 'L';
-            position_y--;
-            return;
-        }
-        else if (x() < 810 && mapa[position_x][position_y + 1] != 'X'){
-            setPos(x() + 30,y());
+        if (posy  == 1){
+            setPos(x() + 5,y());
             direcction = 'R';
-            position_y++;
+            com_x += 0.17;
+            if (com_x >= 1.0){
+                i++;
+                position_y++;
+                com_x = 0;
+            }
             return;
         }
-        else if (y() < 540 && mapa[position_x + 1][position_y] != 'X'){
-            setPos(x(),y() + 30);
-            direcction = 'D';
-            position_x++;
+        if (posy == -1){
+            setPos(x() - 5,y());
+            direcction = 'L';
+            com_x -= 0.17;
+            if (com_x <= -1.0){
+                i++;
+                position_y--;
+                com_x = 0;
+            }
             return;
         }
-    }
+        else{
+            return;
+        }
+
+}
+
+void Ghost::setPos_to_pacman()
+{
+    // Source is the left-most bottom-most corner
+    AStar::Pair src = make_pair(position_x, position_y);
+
+    // Destination is the left-most top-most corner
+    AStar::Pair dest = make_pair(posX_Pacman, posY_Pacman);
+    astar->aStarSearch(mapa,src,dest);
+    setList(astar->list);
 }
 
 void Ghost::quit_super_pillow()

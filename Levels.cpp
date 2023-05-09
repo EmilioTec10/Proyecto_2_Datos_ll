@@ -83,6 +83,7 @@ void Levels::check_win()
 void Levels::check_collision()
 {
     QList<QGraphicsItem *> colliding_items = pac_man->collidingItems(); //List of the colliding items
+    QList<QGraphicsItem *> colliding_items_ghost = ghost->collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i){
         if (typeid(*(colliding_items[i])) == typeid(Dot)){
             scene->removeItem(colliding_items[i]);
@@ -113,6 +114,11 @@ void Levels::check_collision()
                 return;
             }
         }
+        else if (typeid(*(colliding_items_ghost[i])) == typeid(SuperDot)){
+            scene->removeItem(colliding_items[i]);
+            delete colliding_items[i];
+            return;
+        }
     }
 }
 
@@ -123,6 +129,11 @@ void Levels::check_points()
         SuperDot *super_dot = new SuperDot();
         scene->addItem(super_dot);
         super_dot->setPos(420,600/2);
+        //ghost->set_to_pacman->stop();
+
+        //ghost->timer_move_to_pacman->stop();
+        ghost->timer_move_to_pillow->start(65); //Signal every 50 miliseconds
+
     }
 }
 

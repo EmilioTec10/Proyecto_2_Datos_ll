@@ -19,23 +19,23 @@ public:
     char mapa[21][30] = {
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
         "X            XXX            X",
-        "X XXXXX XXXX XXX XXXX XXXXX X",
+        "X X X X XXXX XXX XXXX X X X X",
+        "X X X X XXXX XXX XXXX X X X X",
+        "X X                       X X",
+        "X X X XXXXX  XXX   XXXX X X X",
+        "X X X X XXXX XXX XXXX X X X X",
+        "X X X X X           X X X X X",
+        "X X X X X XXXX XXXX X X X X X",
+        "X X X X X X       X X X X X X",
         "X                           X",
-        "X XXX XXXXX XXXXX XXXXX XXX X",
-        "X XXX X               X XXX X",
-        "X XXX X XXXXXXXXXXXXX X XXX X",
-        "X XXX X X           X X XXX X",
-        "X XXX X X XXXXXXXXX X X XXX X",
-        "X XXX X X X       X X X XXX X",
+        "X X X X X XXXX XXXX X X X X X",
+        "X X X                   X X X",
+        "X X X X X XXXXXXXXX X X X X X",
+        "X X X X X           X X X X X",
+        "X X X X X XXXXXXXXX X X X X X",
         "X                           X",
-        "X XXX X X XXXXXXXXX X X XXX X",
-        "X XXX X X           X X XXX X",
-        "X XXX X X XXXXXXXXX X X XXX X",
-        "X XXX X X           X X XXX X",
-        "X XXX X X XXXXXXXXX X X XXX X",
+        "X XXXXXXXXXX XXX XXXXXXXXXX X",
         "X                           X",
-        "X XXX X XXXX XXX XXXX XXXXX X",
-        "X            XXX            X",
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     };
 
@@ -50,7 +50,8 @@ public:
     QTimer *col;
 
     Pac_Man *pac_man;
-    Ghost *ghost;
+    Ghost *ghost_1;
+    Ghost *ghost_2;
 
     QGraphicsTextItem *points_label;
     QGraphicsTextItem *lifes_label;

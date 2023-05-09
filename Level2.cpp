@@ -17,7 +17,8 @@ Level2::Level2(QWidget *parent)
 
     init_level();
 
-    ghost = new Ghost();
+    ghost_1 = new Ghost();
+    ghost_2 = new Ghost();
     pac_man = new Pac_Man();
 
     col = new QTimer();
@@ -42,13 +43,15 @@ Level2::Level2(QWidget *parent)
     lifes_label->setDefaultTextColor(Qt::red);
 
     scene->addItem(pac_man);
-    scene->addItem(ghost);
+    scene->addItem(ghost_1);
+    scene->addItem(ghost_2);
     scene->addItem(points_label);
     scene->addItem(lifes_label);
 
     points_label->setPos(720,590);
     lifes_label->setPos(600,590);
-    ghost->setPos(810,30);
+    ghost_1->setPos(810,30);
+    ghost_2->setPos(30,30);
 
     pac_man->set_points_label(points_label);
     pac_man->set_lifes_label(lifes_label);
@@ -74,7 +77,8 @@ void Level2::check_win()
     if (pillows == 0){
         if (level == 2){
             delete pac_man;
-            delete ghost;
+            delete ghost_1;
+            delete ghost_2;
             delete points_label;
             delete lifes_label;
             delete timer_points;

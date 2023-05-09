@@ -3,6 +3,7 @@
 
 #include <QGraphicsPixmapItem>
 #include <QObject>
+#include "AStar.h"
 
 class Ghost:public QObject , public  QGraphicsPixmapItem{
     Q_OBJECT
@@ -17,11 +18,19 @@ public:
     void setPosY_Pacman(int posY_Pacman);
     void set_mapa(char mapa[21][30]);
     void set_pac_direction(char pac_direction);
+    void setList(pair<int,int> list[51]);
+    void setPos_to_pillow();
 
     QTimer *timer_super;
+    QTimer *set_to_pacman;
+    QTimer *timer_move_to_pacman;
+    QTimer *timer_move_to_pillow;
+    AStar *astar = new AStar();
 
 public slots:
-    void move();
+    void move_to_pacman();
+    void setPos_to_pacman();
+    void move_to_pillow();
     void quit_super_pillow();
     void change_pix();
 private:
@@ -33,6 +42,7 @@ private:
     int position_x = 1;
     int position_y = 27;
     char mapa[21][30];
+    pair<int,int> list[51];
 };
 
 #endif // GHOST_H
