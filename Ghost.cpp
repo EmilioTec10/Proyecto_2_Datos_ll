@@ -5,22 +5,19 @@
 Ghost::Ghost()
 {
     setPixmap(QPixmap(":/Images/GhostD.png"));
-    /*
-    set_to_pacman = new QTimer();
-    connect(set_to_pacman,SIGNAL(timeout()),this,SLOT(setPos_to_pacman()));
-    set_to_pacman->start(80);
 
     timer_move_to_pacman = new QTimer();
     connect(timer_move_to_pacman,SIGNAL(timeout()),this,SLOT(move_to_pacman())); //conect method that repeats the method everytime it recives the signal
-    timer_move_to_pacman->start(80);
-    */
+    timer_move_to_pacman->start(70);
+
 
     timer_move_to_pillow = new QTimer();
     connect(timer_move_to_pillow,SIGNAL(timeout()),this,SLOT(move_to_pillow())); //conect method that repeats the method everytime it recives the signal
 
-    QTimer *timer_animation = new QTimer;
+    timer_animation = new QTimer;
     connect(timer_animation,SIGNAL(timeout()),this,SLOT(change_pix())); //conect method that repeats the method everytime it recives the signal
-    timer_animation->start(80); //Signal every 50 miliseconds
+    timer_animation->start(70); //Signal every 50 miliseconds
+
 }
 
 void Ghost::super_pillow()
@@ -49,7 +46,7 @@ void Ghost::set_mapa(char mapa[21][30])
             this->mapa[i][j] = mapa[i][j];
         }
     }
-    setPos_to_pillow();
+    setPos_to_pacman();
 }
 
 void Ghost::set_pac_direction(char pac_direction)
@@ -64,7 +61,6 @@ void Ghost::setList(pair<int, int> list[])
     }
 }
 
-int i = 1;
 void Ghost::setPos_to_pillow(){
     // Source is the left-most bottom-most corner
     AStar::Pair src = make_pair(position_x, position_y);
@@ -73,6 +69,24 @@ void Ghost::setPos_to_pillow(){
     AStar::Pair dest = make_pair(10, 14);
     astar->aStarSearch(mapa,src,dest);
     setList(astar->list);
+}
+
+void Ghost::revive()
+{
+    timer_move_to_pacman->stop();
+    timer_move_to_pillow->stop();
+    timer_animation->stop();
+    setPos_to_pacman();
+    setPos(810,30);
+    int position_x = 1;
+    int position_y = 27;
+    float com_x = 0.0;
+    float com_y = 0.0;
+    char direcction = 'D';
+
+    timer_move_to_pacman->start(70);
+    timer_animation->start(70);
+
 }
 void Ghost::move_to_pillow()
 {
@@ -123,6 +137,10 @@ void Ghost::move_to_pillow()
             return;
         }
         else{
+            timer_move_to_pillow->stop();
+            timer_move_to_pacman->start(70);
+            setPos_to_pacman();
+            i = 1;
             return;
         }
 
@@ -178,6 +196,8 @@ void Ghost::move_to_pacman()
             return;
         }
         else{
+            setPos_to_pacman();
+            i = 1;
             return;
         }
 

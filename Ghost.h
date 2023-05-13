@@ -20,12 +20,17 @@ public:
     void set_pac_direction(char pac_direction);
     void setList(pair<int,int> list[51]);
     void setPos_to_pillow();
+    void revive();
 
     QTimer *timer_super;
     QTimer *set_to_pacman;
     QTimer *timer_move_to_pacman;
     QTimer *timer_move_to_pillow;
+    QTimer *timer_animation;
+
     AStar *astar = new AStar();
+
+    int i = 1;
 
 public slots:
     void move_to_pacman();

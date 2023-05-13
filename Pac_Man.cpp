@@ -27,7 +27,7 @@ Pac_Man::Pac_Man()
 
 void Pac_Man::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_W && com_y == 0){
+    if (event->key() == Qt::Key_W){
         direcction = 'U';
         cycle = 0;
         timer_animation_D->stop();
@@ -35,7 +35,7 @@ void Pac_Man::keyPressEvent(QKeyEvent *event)
         timer_animation_R->stop();
         timer_animation_U->start(150);
     }
-    if (event->key() == Qt::Key_S && com_y == 0 ){
+    if (event->key() == Qt::Key_S){
         direcction = 'D';
         cycle = 0;
         timer_animation_L->stop();

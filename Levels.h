@@ -48,6 +48,7 @@ public:
     QTimer *timer_points = new QTimer();
     QTimer *timer_level;
     QTimer *col;
+    QTimer *col_ghost;
     QTimer *timer_set;
 
     Pac_Man *pac_man;
@@ -61,6 +62,7 @@ public:
 public slots:
     void check_win();
     void check_collision();
+    void check_ghost_collision();
     void check_points();
     void set_pac_position();
 private:

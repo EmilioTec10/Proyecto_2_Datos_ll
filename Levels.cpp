@@ -25,6 +25,10 @@ Levels::Levels(QWidget *parent)
     connect(col,SIGNAL(timeout()),this,SLOT(check_collision()));
     col->start(100);
 
+    col_ghost = new QTimer();
+    connect(col_ghost,SIGNAL(timeout()),this,SLOT(check_ghost_collision()));
+    col_ghost->start(100);
+
     timer_level = new QTimer();
     connect(timer_level,SIGNAL(timeout()),this,SLOT(check_win()));
     timer_level->start(800);
@@ -34,7 +38,7 @@ Levels::Levels(QWidget *parent)
     timer_set->start(500);
 
     connect(timer_points, SIGNAL(timeout()),this, SLOT(check_points()));
-    timer_points->start(500);
+    timer_points->start(300);
 
     points_label = new QGraphicsTextItem("Points: " + QString::number(0));
     points_label->setFont(font);
@@ -83,7 +87,6 @@ void Levels::check_win()
 void Levels::check_collision()
 {
     QList<QGraphicsItem *> colliding_items = pac_man->collidingItems(); //List of the colliding items
-    QList<QGraphicsItem *> colliding_items_ghost = ghost->collidingItems();
     for (int i = 0, n = colliding_items.size(); i < n; ++i){
         if (typeid(*(colliding_items[i])) == typeid(Dot)){
             scene->removeItem(colliding_items[i]);
@@ -100,6 +103,7 @@ void Levels::check_collision()
             ghost->super_pillow();
             return;
         }
+
         else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
             if (ghost->superpillow == false){
                 pac_man->lifes--;
@@ -110,16 +114,24 @@ void Levels::check_collision()
                 return;
             }
             else {
-                ghost->setPos(810,30);
+                ghost->revive();
                 return;
             }
-        }
-        else if (typeid(*(colliding_items_ghost[i])) == typeid(SuperDot)){
-            scene->removeItem(colliding_items[i]);
-            delete colliding_items[i];
-            return;
+
         }
     }
+}
+
+void Levels::check_ghost_collision()
+{
+        QList<QGraphicsItem *> colliding_items_ghost = ghost->collidingItems();
+        for (int i = 0, n = colliding_items_ghost.size(); i < n; ++i){
+            if (typeid(*(colliding_items_ghost[i])) == typeid(SuperDot)){
+                        scene->removeItem(colliding_items_ghost[i]);
+                        delete colliding_items_ghost[i];
+                        return;
+                    }
+        }
 }
 
 void Levels::check_points()
@@ -131,8 +143,10 @@ void Levels::check_points()
         super_dot->setPos(420,600/2);
         //ghost->set_to_pacman->stop();
 
-        //ghost->timer_move_to_pacman->stop();
-        ghost->timer_move_to_pillow->start(65); //Signal every 50 miliseconds
+        ghost->timer_move_to_pacman->stop();
+        ghost->setPos_to_pillow();
+        ghost->i = 1;
+        ghost->timer_move_to_pillow->start(70); //Signal every 50 miliseconds
 
     }
 }
