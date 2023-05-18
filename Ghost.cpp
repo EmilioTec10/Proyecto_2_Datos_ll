@@ -73,17 +73,16 @@ void Ghost::setPos_to_pillow(){
 
 void Ghost::revive()
 {
-    int position_x = 1;
-    int position_y = 27;
-    float com_x = 0.0;
-    float com_y = 0.0;
-    char direcction = 'D';
+    position_x = 1;
+    position_y = 27;
+    com_x = 0.0;
+    com_y = 0.0;
+    direcction = 'L';
 
     timer_move_to_pacman->stop();
     timer_move_to_pillow->stop();
     timer_animation->stop();
     setPos_to_pacman();
-    qDebug() << posX_Pacman << ", " << posY_Pacman;
     setPos(810,30);
 
 

@@ -94,6 +94,7 @@ void Levels::check_lose()
     if (pac_man->lifes == 0){
         timer_level->stop();
         timer_points->stop();
+        timer_lose->stop();
         this->close();
         Game_Over *window = new Game_Over();
         window->show();
@@ -122,10 +123,8 @@ void Levels::check_collision()
 
         else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
             if (ghost->superpillow == false){
-                pac_man->lifes--;
-                pac_man->position_x = 10;
-                pac_man->position_y = 14;
-                pac_man->setPos(420,600/2);
+                pac_man->revive();
+                ghost->revive();
                 lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
                 return;
             }

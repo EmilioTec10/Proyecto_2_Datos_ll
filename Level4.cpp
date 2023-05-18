@@ -116,9 +116,10 @@ void Level4::check_win()
 
 void Level4::check_lose()
 {
-    if (pac_man->lifes == 0){
+    if (pac_man->lifes <= 0){
         timer_level->stop();
         timer_points->stop();
+        timer_lose->stop();
         this->close();
         Game_Over *window = new Game_Over();
         window->show();
@@ -142,23 +143,10 @@ void Level4::check_collision()
             delete colliding_items[i];
             points += 50;
             ghost1->super_pillow();
+            ghost2->super_pillow();
+            ghost3->super_pillow();
+            ghost4->super_pillow();
             return;
-        }
-
-        else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
-            if (ghost1->superpillow == false){
-                pac_man->lifes--;
-                pac_man->position_x = 10;
-                pac_man->position_y = 14;
-                pac_man->setPos(420,600/2);
-                lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
-                return;
-            }
-            else {
-                ghost1->revive();
-                return;
-            }
-
         }
     }
 }
@@ -172,6 +160,19 @@ void Level4::check_ghost1_collision()
                         delete colliding_items_ghost[i];
                         return;
                     }
+            else if (typeid(*(colliding_items_ghost[i])) == typeid(Pac_Man)){
+                if (ghost1->superpillow == false){
+                    pac_man->revive();
+                    ReviveGhosts();
+                    lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
+                    return;
+                }
+                else {
+                    ghost1->revive();
+                    return;
+                }
+
+            }
         }
 }
 
@@ -184,6 +185,19 @@ void Level4::check_ghost2_collision()
                         delete colliding_items_ghost[i];
                         return;
                     }
+            else if (typeid(*(colliding_items_ghost[i])) == typeid(Pac_Man)){
+                if (ghost1->superpillow == false){
+                    pac_man->revive();
+                    ReviveGhosts();
+                    lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
+                    return;
+                }
+                else {
+                    ghost2->revive();
+                    return;
+                }
+
+            }
         }
 }
 
@@ -197,6 +211,19 @@ void Level4::check_ghost3_collision()
                         delete colliding_items_ghost[i];
                         return;
                     }
+            else if (typeid(*(colliding_items_ghost[i])) == typeid(Pac_Man)){
+                if (ghost1->superpillow == false){
+                    pac_man->revive();
+                    ReviveGhosts();
+                    lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
+                    return;
+                }
+                else {
+                    ghost3->revive();
+                    return;
+                }
+
+            }
         }
 }
 
@@ -209,13 +236,37 @@ void Level4::check_ghost4_collision()
                         delete colliding_items_ghost[i];
                         return;
                     }
+            else if (typeid(*(colliding_items_ghost[i])) == typeid(Pac_Man)){
+                if (ghost1->superpillow == false){
+                    pac_man->revive();
+                    ReviveGhosts();
+                    lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
+                    return;
+                }
+                else {
+                    ghost4->revive();
+                    return;
+                }
+
+            }
         }
 }
 
 
 void Level4::setPoints(int points)
 {
- this->points = points;
+    this->points = points;
+}
+
+void Level4::ReviveGhosts()
+{
+    ghost1->revive();
+
+    ghost2->revive();
+
+    ghost3->revive();
+
+    ghost4->revive();
 }
 
 

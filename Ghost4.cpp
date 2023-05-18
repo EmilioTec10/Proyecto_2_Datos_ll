@@ -73,18 +73,18 @@ void Ghost4::setPos_to_pillow(){
 
 void Ghost4::revive()
 {
-    int position_x = 18;
-    int position_y = 1;
-    float com_x = 0.0;
-    float com_y = 0.0;
-    char direcction = 'D';
+    position_x = 18;
+    position_y = 3;
+    com_x = 0.0;
+    com_y = 0.0;
+    direcction = 'D';
 
     timer_move_to_pacman->stop();
     timer_move_to_pillow->stop();
     timer_animation->stop();
     setPos_to_pacman();
     qDebug() << posX_Pacman << ", " << posY_Pacman;
-    setPos(810,540);
+    setPos(90,540);
 
 
     timer_move_to_pacman->start(70);

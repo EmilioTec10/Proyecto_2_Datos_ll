@@ -105,9 +105,10 @@ void Level2::check_win()
 
 void Level2::check_lose()
 {
-    if (pac_man->lifes == 0){
+    if (pac_man->lifes <= 0){
         timer_level->stop();
         timer_points->stop();
+        timer_lose->stop();
         this->close();
         Game_Over *window = new Game_Over();
         window->show();
@@ -134,22 +135,6 @@ void Level2::check_collision()
             ghost_2->super_pillow();
             return;
         }
-
-        else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
-            if (ghost_1->superpillow == false){
-                pac_man->lifes--;
-                pac_man->position_x = 10;
-                pac_man->position_y = 14;
-                pac_man->setPos(420,600/2);
-                lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
-                return;
-            }
-            else {
-                ghost_1->revive();
-                return;
-            }
-
-        }
     }
 }
 
@@ -162,6 +147,19 @@ void Level2::check_ghost1_collision()
                         delete colliding_items_ghost[i];
                         return;
                     }
+            else if (typeid(*(colliding_items_ghost[i])) == typeid(Pac_Man)){
+                if (ghost_1->superpillow == false){
+                    pac_man->revive();
+                    lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
+                    ReviveGhosts();
+                    return;
+                }
+                else {
+                    ghost_1->revive();
+                    return;
+                }
+
+            }
         }
 }
 
@@ -174,6 +172,19 @@ void Level2::check_ghost2_collision()
                         delete colliding_items_ghost[i];
                         return;
                     }
+            else if (typeid(*(colliding_items_ghost[i])) == typeid(Pac_Man)){
+                if (ghost_2->superpillow == false){
+                    pac_man->revive();
+                    ReviveGhosts();
+                    lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
+                    return;
+                }
+                else {
+                    ghost_2->revive();
+                    return;
+                }
+
+            }
         }
 }
 
@@ -207,6 +218,12 @@ void Level2::set_pac_position()
     ghost_2->setPosX_Pacman(pac_man->position_x);
     ghost_2->setPosY_Pacman(pac_man->position_y);
     ghost_2->set_pac_direction(pac_man->direcction);
+}
+
+void Level2::ReviveGhosts()
+{
+    ghost_1->revive();
+    ghost_2->revive();
 }
 
 void Level2::init_level()

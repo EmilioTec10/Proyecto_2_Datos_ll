@@ -1,5 +1,4 @@
 #include "Pac_Man.h"
-#include "qgraphicsscene.h"
 #include <QTimer>
 #include <QKeyEvent>
 #include <QDebug>
@@ -82,19 +81,20 @@ void Pac_Man::set_mapa(char mapa[21][30])
 
 void Pac_Man::revive()
 {
-    Pac_Man *pac_man = new Pac_Man();
-    pac_man->setPos(420,600/2);
+    timer_move->stop();
+
+    lifes--;
     com_x = 0.0;
     com_y = 0.0;
     position_x = 10;
     position_y = 14;
-    scene()->addItem(pac_man);
-    die_timer->stop();
+    setPos(420,600/2);
+
+    timer_move->start();
 }
 
 void Pac_Man::move()
 {
-
     if (direcction == 'R'){
         if (x() < 810 && mapa[position_x][position_y + 1] != 'X'){
             setPos(x() + speed,y());

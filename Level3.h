@@ -43,6 +43,7 @@ public:
     };
 
     void setPoints(int points);
+    void ReviveGhosts();
 
     QPixmap m_labyrinthPixmap;
     QGraphicsPixmapItem* m_labyrinthPixmapItems[LABYRINTH_WIDTH][LABYRINTH_HEIGHT];
