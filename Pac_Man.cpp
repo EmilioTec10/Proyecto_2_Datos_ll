@@ -20,7 +20,7 @@ Pac_Man::Pac_Man()
     connect(timer_animation_U,SIGNAL(timeout()),this,SLOT(animation_U())); //conect method that repeats the method everytime it recives the signal
     connect(timer_animation_D,SIGNAL(timeout()),this,SLOT(animation_D())); //conect method that repeats the method everytime it recives the signal
     connect(timer_animation_L,SIGNAL(timeout()),this,SLOT(animation_L())); //conect method that repeats the method everytime it recives the signal
-    timer_animation_R->start(150); //Signal every 50 miliseconds
+    timer_animation_R->start(100); //Signal every 50 miliseconds
 }
 
 
@@ -33,7 +33,7 @@ void Pac_Man::keyPressEvent(QKeyEvent *event)
         timer_animation_D->stop();
         timer_animation_L->stop();
         timer_animation_R->stop();
-        timer_animation_U->start(150);
+        timer_animation_U->start(100);
     }
     if (event->key() == Qt::Key_S){
         direcction = 'D';
@@ -41,12 +41,12 @@ void Pac_Man::keyPressEvent(QKeyEvent *event)
         timer_animation_L->stop();
         timer_animation_R->stop();
         timer_animation_U->stop();
-        timer_animation_D->start(150);
+        timer_animation_D->start(100);
     }
     if (event->key() == Qt::Key_A){
         direcction = 'L';
         cycle = 0;
-        timer_animation_L->start(150);
+        timer_animation_L->start(100);
         timer_animation_R->stop();
         timer_animation_U->stop();
         timer_animation_D->stop();
@@ -55,7 +55,7 @@ void Pac_Man::keyPressEvent(QKeyEvent *event)
         direcction = 'R';
         cycle = 0;
         timer_animation_L->stop();
-        timer_animation_R->start(150);
+        timer_animation_R->start(100);
         timer_animation_U->stop();
         timer_animation_D->stop();
     }

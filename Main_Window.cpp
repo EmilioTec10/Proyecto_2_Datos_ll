@@ -4,6 +4,9 @@
 #include <QRectF>
 #include "Main_Window.h"
 #include "Levels.h"
+#include "Level2.h"
+#include "Level3.h"
+#include "Level4.h"
 
 
 Main_Window::Main_Window(QWidget *parent)
@@ -66,7 +69,7 @@ Main_Window::Main_Window(QWidget *parent)
 
 void Main_Window::game()
 {
-    Levels *level_1 = new Levels();
+    Level4 *level_1 = new Level4();
     level_1->show();
     this->close();
 }

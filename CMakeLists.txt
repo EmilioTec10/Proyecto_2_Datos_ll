@@ -26,6 +26,12 @@ set(PROJECT_SOURCES
         Blocks.cpp
         Ghost.h
         Ghost.cpp
+        Ghost2.h
+        Ghost2.cpp
+        Ghost3.h
+        Ghost3.cpp
+        Ghost4.h
+        Ghost4.cpp
         SuperDot.h
         SuperDot.cpp
         Level2.cpp
@@ -36,6 +42,10 @@ set(PROJECT_SOURCES
         Level4.cpp
         AStar.h
         AStar.cpp
+        Win_WIndow.h
+        Win_WIndow.cpp
+        Lose_Window.h
+        Lose_Window.cpp
         Resources.qrc
 
 )

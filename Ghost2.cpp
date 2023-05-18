@@ -1,10 +1,10 @@
-#include "Ghost.h"
+#include "Ghost2.h"
 #include "AStar.h"
 #include <QTimer>
 
-Ghost::Ghost()
+Ghost2::Ghost2()
 {
-    setPixmap(QPixmap(":/Images/GhostD.png"));
+    setPixmap(QPixmap(":/Images/Ghost2D.png"));
 
     timer_move_to_pacman = new QTimer();
     connect(timer_move_to_pacman,SIGNAL(timeout()),this,SLOT(move_to_pacman())); //conect method that repeats the method everytime it recives the signal
@@ -20,7 +20,7 @@ Ghost::Ghost()
 
 }
 
-void Ghost::super_pillow()
+void Ghost2::super_pillow()
 {
     superpillow = true;
     setPixmap(QPixmap(":/Images/GhostT.png"));
@@ -29,17 +29,17 @@ void Ghost::super_pillow()
     timer_super->start(3000);
 }
 
-void Ghost::setPosX_Pacman(int posX_Pacman)
+void Ghost2::setPosX_Pacman(int posX_Pacman)
 {
     this->posX_Pacman = posX_Pacman;
 }
 
-void Ghost::setPosY_Pacman(int posY_Pacman)
+void Ghost2::setPosY_Pacman(int posY_Pacman)
 {
     this->posY_Pacman = posY_Pacman;
 }
 
-void Ghost::set_mapa(char mapa[21][30])
+void Ghost2::set_mapa(char mapa[21][30])
 {
     for (int i = 0;i < 21;i++){
         for(int j = 0;j < 30;j++){
@@ -49,19 +49,19 @@ void Ghost::set_mapa(char mapa[21][30])
     setPos_to_pacman();
 }
 
-void Ghost::set_pac_direction(char pac_direction)
+void Ghost2::set_pac_direction(char pac_direction)
 {
     this->pac_direction = pac_direction;
 }
 
-void Ghost::setList(pair<int, int> list[])
+void Ghost2::setList(pair<int, int> list[])
 {
     for (int i = 0;i < 51;i++){
         this->list[i] = list[i];
     }
 }
 
-void Ghost::setPos_to_pillow(){
+void Ghost2::setPos_to_pillow(){
     // Source is the left-most bottom-most corner
     AStar::Pair src = make_pair(position_x, position_y);
 
@@ -71,10 +71,10 @@ void Ghost::setPos_to_pillow(){
     setList(astar->list);
 }
 
-void Ghost::revive()
+void Ghost2::revive()
 {
     int position_x = 1;
-    int position_y = 27;
+    int position_y = 1;
     float com_x = 0.0;
     float com_y = 0.0;
     char direcction = 'D';
@@ -84,7 +84,7 @@ void Ghost::revive()
     timer_animation->stop();
     setPos_to_pacman();
     qDebug() << posX_Pacman << ", " << posY_Pacman;
-    setPos(810,30);
+    setPos(30,30);
 
 
     timer_move_to_pacman->start(70);
@@ -92,7 +92,7 @@ void Ghost::revive()
 
 
 }
-void Ghost::move_to_pillow()
+void Ghost2::move_to_pillow()
 {
     int posx = list[i].first - position_x;
     int posy = list[i].second - position_y;
@@ -151,7 +151,7 @@ void Ghost::move_to_pillow()
 
 }
 
-void Ghost::move_to_pacman()
+void Ghost2::move_to_pacman()
 {
     int posx = list[i].first - position_x;
     int posy = list[i].second - position_y;
@@ -207,7 +207,7 @@ void Ghost::move_to_pacman()
 
 }
 
-void Ghost::setPos_to_pacman()
+void Ghost2::setPos_to_pacman()
 {
     // Source is the left-most bottom-most corner
     AStar::Pair src = make_pair(position_x, position_y);
@@ -218,32 +218,32 @@ void Ghost::setPos_to_pacman()
     setList(astar->list);
 }
 
-void Ghost::quit_super_pillow()
+void Ghost2::quit_super_pillow()
 {
-    setPixmap(QPixmap(":/Images/GhostD.png"));
+    setPixmap(QPixmap(":/Images/Ghost2D.png"));
     superpillow = false;
     timer_super->stop();
 }
 
-void Ghost::change_pix()
+void Ghost2::change_pix()
 {
     if (superpillow == true){
         return;
     }
     if (direcction == 'L'){
-        setPixmap(QPixmap(":/Images/GhostL.png"));
+        setPixmap(QPixmap(":/Images/Ghost2L.png"));
         return;
     }
     else if (direcction == 'D'){
-        setPixmap(QPixmap(":/Images/GhostD.png"));
+        setPixmap(QPixmap(":/Images/Ghost2D.png"));
         return;
     }
     else if (direcction == 'U'){
-        setPixmap(QPixmap(":/Images/GhostU.png"));
+        setPixmap(QPixmap(":/Images/Ghost2U.png"));
         return;
     }
     else {
-        setPixmap(QPixmap(":/Images/GhostR.png"));
+        setPixmap(QPixmap(":/Images/Ghost2R.png"));
         return;
     }
 }

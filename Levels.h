@@ -39,13 +39,12 @@ public:
         "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     };
 
-    void setPoints(int points);
-
     QPixmap m_labyrinthPixmap;
     QGraphicsPixmapItem* m_labyrinthPixmapItems[LABYRINTH_WIDTH][LABYRINTH_HEIGHT];
     QPixmap m_labyrinthPixmaps[32];
 
     QTimer *timer_points = new QTimer();
+    QTimer *timer_lose;
     QTimer *timer_level;
     QTimer *col;
     QTimer *col_ghost;
@@ -61,6 +60,7 @@ public:
 
 public slots:
     void check_win();
+    void check_lose();
     void check_collision();
     void check_ghost_collision();
     void check_points();

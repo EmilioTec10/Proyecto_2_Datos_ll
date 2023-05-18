@@ -26,5 +26,17 @@
         <file>D3.png</file>
         <file>D2.png</file>
         <file>D1.png</file>
+        <file>Ghost2U.png</file>
+        <file>Ghost2R.png</file>
+        <file>Ghost2L.png</file>
+        <file>Ghost2D.png</file>
+        <file>Ghost3U.png</file>
+        <file>Ghost3R.png</file>
+        <file>Ghost3L.png</file>
+        <file>Ghost3D.png</file>
+        <file>Ghost4U.png</file>
+        <file>Ghost4R.png</file>
+        <file>Ghost4L.png</file>
+        <file>Ghost4D.png</file>
     </qresource>
 </RCC>

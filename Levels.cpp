@@ -4,6 +4,7 @@
 #include "Ghost.h"
 #include "Dots.h"
 #include "SuperDot.h"
+#include "Lose_Window.h"
 #include <QTimer>
 #include <QGraphicsRectItem>
 #include <iostream>
@@ -24,6 +25,10 @@ Levels::Levels(QWidget *parent)
     col = new QTimer();
     connect(col,SIGNAL(timeout()),this,SLOT(check_collision()));
     col->start(100);
+
+    timer_lose = new QTimer();
+    connect(timer_lose,SIGNAL(timeout()),this,SLOT(check_lose()));
+    timer_lose->start(100);
 
     col_ghost = new QTimer();
     connect(col_ghost,SIGNAL(timeout()),this,SLOT(check_ghost_collision()));
@@ -81,6 +86,17 @@ void Levels::check_win()
         Level2 *level2 = new Level2();
         level2->setPoints(points);
         level2->show();
+    }
+}
+
+void Levels::check_lose()
+{
+    if (pac_man->lifes == 0){
+        timer_level->stop();
+        timer_points->stop();
+        this->close();
+        Game_Over *window = new Game_Over();
+        window->show();
     }
 }
 

@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include "Pac_Man.h"
 #include "Ghost.h"
+#include "Ghost2.h"
 
 class Level2:public QGraphicsView{
     Q_OBJECT
@@ -46,12 +47,16 @@ public:
     QPixmap m_labyrinthPixmaps[32];
 
     QTimer *timer_points = new QTimer();
+    QTimer *timer_lose;
     QTimer *timer_level;
     QTimer *col;
+    QTimer *col_ghost1;
+    QTimer *col_ghost2;
+    QTimer *timer_set;
 
     Pac_Man *pac_man;
     Ghost *ghost_1;
-    Ghost *ghost_2;
+    Ghost2 *ghost_2;
 
     QGraphicsTextItem *points_label;
     QGraphicsTextItem *lifes_label;
@@ -60,8 +65,12 @@ public:
 
 public slots:
     void check_win();
+    void check_lose();
     void check_collision();
+    void check_ghost1_collision();
+    void check_ghost2_collision();
     void check_points();
+    void set_pac_position();
 private:
     int pillows = 0;
     int level = 2;
