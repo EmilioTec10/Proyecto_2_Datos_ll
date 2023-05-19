@@ -9,6 +9,10 @@
 #include <QGraphicsRectItem>
 #include <iostream>
 
+/**
+ * @brief Level2::Level2 Construcotr que inicia la pantalla del juego
+ * @param parent Hace posible que se incie
+ */
 Level2::Level2(QWidget *parent)
 {
     //Creation and configuration of the scene
@@ -85,11 +89,18 @@ Level2::Level2(QWidget *parent)
 
 }
 
+/**
+ * @brief Level2::setPoints Define los puntos actuales en una varible
+ * @param points Variable a definir
+ */
 void Level2::setPoints(int points)
 {
  this->points = points;
 }
 
+/**
+ * @brief Level2::check_win Verifica si el jugador consiguio todas las pastillas para pasar de nivel
+ */
 void Level2::check_win()
 {
     if (pillows == 0){
@@ -102,7 +113,9 @@ void Level2::check_win()
     }
 }
 
-
+/**
+ * @brief Level2::check_lose Verifica la cantidad de vidas del jugador para ver si ya perdio
+ */
 void Level2::check_lose()
 {
     if (pac_man->lifes <= 0){
@@ -115,6 +128,9 @@ void Level2::check_lose()
     }
 }
 
+/**
+ * @brief Level2::check_collision Verifica la colision de el pacman con los objetos
+ */
 void Level2::check_collision()
 {
     QList<QGraphicsItem *> colliding_items = pac_man->collidingItems(); //List of the colliding items
@@ -138,6 +154,9 @@ void Level2::check_collision()
     }
 }
 
+/**
+ * @brief Level2::check_ghost1_collision Verfica la colision del fantasma con los objetos
+ */
 void Level2::check_ghost1_collision()
 {
         QList<QGraphicsItem *> colliding_items_ghost = ghost_1->collidingItems();
@@ -156,6 +175,8 @@ void Level2::check_ghost1_collision()
                 }
                 else {
                     ghost_1->revive();
+                    points += 50;
+                    points_label->setPlainText("Points: " + QString::number(points));
                     return;
                 }
 
@@ -163,6 +184,9 @@ void Level2::check_ghost1_collision()
         }
 }
 
+/**
+ * @brief Level2::check_ghost2_collision Verfica la colision del fantasma con los objetos
+ */
 void Level2::check_ghost2_collision()
 {
         QList<QGraphicsItem *> colliding_items_ghost = ghost_2->collidingItems();
@@ -181,6 +205,8 @@ void Level2::check_ghost2_collision()
                 }
                 else {
                     ghost_2->revive();
+                    points += 50;
+                    points_label->setPlainText("Points: " + QString::number(points));
                     return;
                 }
 
@@ -188,7 +214,9 @@ void Level2::check_ghost2_collision()
         }
 }
 
-
+/**
+ * @brief Level2::check_points Verifica la cantidad de putnos para poner una super pastilla
+ */
 void Level2::check_points()
 {
     if (points % 200 == 0){
@@ -209,6 +237,9 @@ void Level2::check_points()
     }
 }
 
+/**
+ * @brief Level2::set_pac_position Define la poscion de el pacman a los fantasmas
+ */
 void Level2::set_pac_position()
 {
     ghost_1->setPosX_Pacman(pac_man->position_x);
@@ -220,12 +251,18 @@ void Level2::set_pac_position()
     ghost_2->set_pac_direction(pac_man->direcction);
 }
 
+/**
+ * @brief Level2::ReviveGhosts Funcion que revive los fantasmas del nivel
+ */
 void Level2::ReviveGhosts()
 {
     ghost_1->revive();
     ghost_2->revive();
 }
 
+/**
+ * @brief Level2::init_level Inicia el laberinto con los obstaculos y las pastillas
+ */
 void Level2::init_level()
 {
 

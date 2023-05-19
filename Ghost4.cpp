@@ -2,6 +2,9 @@
 #include "AStar.h"
 #include <QTimer>
 
+/**
+ * @brief Ghost4::Ghost4 Constructor que crea un fantasma de color rosado apartir del nivel 4
+ */
 Ghost4::Ghost4()
 {
     setPixmap(QPixmap(":/Images/Ghost4D.png"));
@@ -20,6 +23,9 @@ Ghost4::Ghost4()
 
 }
 
+/**
+ * @brief Ghost4::super_pillow Metodo que pone vulnerable al fantasma cuando pacman se come la superpastilla
+ */
 void Ghost4::super_pillow()
 {
     superpillow = true;
@@ -29,16 +35,28 @@ void Ghost4::super_pillow()
     timer_super->start(3000);
 }
 
+/**
+ * @brief Ghost4::setPosX_Pacman Configura la varible de la posicion en x del pacaman
+ * @param posX_Pacman posicion en x del pac man
+ */
 void Ghost4::setPosX_Pacman(int posX_Pacman)
 {
     this->posX_Pacman = posX_Pacman;
 }
 
+/**
+ * @brief Ghost4::setPosY_Pacman Configura la variable de la posicion actuaal del pacman en el eje y
+ * @param posY_Pacman Posicion en el eje y
+ */
 void Ghost4::setPosY_Pacman(int posY_Pacman)
 {
     this->posY_Pacman = posY_Pacman;
 }
 
+/**
+ * @brief Ghost4::set_mapa Configura la varible del mapa al inicio de cada nivel
+ * @param mapa Mapa del laberinto
+ */
 void Ghost4::set_mapa(char mapa[21][30])
 {
     for (int i = 0;i < 21;i++){
@@ -49,11 +67,19 @@ void Ghost4::set_mapa(char mapa[21][30])
     setPos_to_pacman();
 }
 
+/**
+ * @brief Ghost4::set_pac_direction Configura la direccion del pacaman
+ * @param pac_direction direccion actual del pacman
+ */
 void Ghost4::set_pac_direction(char pac_direction)
 {
     this->pac_direction = pac_direction;
 }
 
+/**
+ * @brief Ghost4::setList Define la lista de el algoritmo a* en esta clase
+ * @param list lista del a*
+ */
 void Ghost4::setList(pair<int, int> list[])
 {
     for (int i = 0;i < 51;i++){
@@ -61,6 +87,9 @@ void Ghost4::setList(pair<int, int> list[])
     }
 }
 
+/**
+ * @brief Ghost4::setPos_to_pillow Define la posicion de la superpastilla para que el fantasma vaya hacia el
+ */
 void Ghost4::setPos_to_pillow(){
     // Source is the left-most bottom-most corner
     AStar::Pair src = make_pair(position_x, position_y);
@@ -71,6 +100,9 @@ void Ghost4::setPos_to_pillow(){
     setList(astar->list);
 }
 
+/**
+ * @brief Ghost4::revive Metodo que hace que el fantasma reviva
+ */
 void Ghost4::revive()
 {
     position_x = 18;
@@ -78,6 +110,7 @@ void Ghost4::revive()
     com_x = 0.0;
     com_y = 0.0;
     direcction = 'D';
+    superpillow = false;
 
     timer_move_to_pacman->stop();
     timer_move_to_pillow->stop();
@@ -92,6 +125,10 @@ void Ghost4::revive()
 
 
 }
+
+/**
+ * @brief Ghost4::move_to_pillow Define la posicion del pacman para que el fantasma vaya hacia el
+ */
 void Ghost4::move_to_pillow()
 {
     int posx = list[i].first - position_x;
@@ -151,6 +188,9 @@ void Ghost4::move_to_pillow()
 
 }
 
+/**
+ * @brief Ghost4::move_to_pacman Funcion que se mueve el fantasma en direccion al pacman
+ */
 void Ghost4::move_to_pacman()
 {
     int posx = list[i].first - position_x;
@@ -207,6 +247,9 @@ void Ghost4::move_to_pacman()
 
 }
 
+/**
+ * @brief Ghost4::setPos_to_pacman Define la poscion actual del pacman como obejtivo
+ */
 void Ghost4::setPos_to_pacman()
 {
     // Source is the left-most bottom-most corner
@@ -218,6 +261,9 @@ void Ghost4::setPos_to_pacman()
     setList(astar->list);
 }
 
+/**
+ * @brief Ghost4::quit_super_pillow Quita el efecto de superpastilla en el fantasma
+ */
 void Ghost4::quit_super_pillow()
 {
     setPixmap(QPixmap(":/Images/Ghost4D.png"));
@@ -225,6 +271,9 @@ void Ghost4::quit_super_pillow()
     timer_super->stop();
 }
 
+/**
+ * @brief Ghost4::change_pix Cambia las animaciones en timepo real
+ */
 void Ghost4::change_pix()
 {
     if (superpillow == true){

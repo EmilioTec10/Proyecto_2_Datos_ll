@@ -9,6 +9,10 @@
 #include <QGraphicsRectItem>
 #include <iostream>
 
+/**
+ * @brief Levels::Levels Construcotr que inicia la pantalla del juego
+ * @param parent Hace posible que se incie
+ */
 Levels::Levels(QWidget *parent)
 {
     //Creation and configuration of the scene
@@ -77,6 +81,9 @@ Levels::Levels(QWidget *parent)
 
 }
 
+/**
+ * @brief Levels::check_win Verifica si el jugador consiguio todas las pastillas para pasar de nivel
+ */
 void Levels::check_win()
 {
     if (pillows == 0){
@@ -89,6 +96,9 @@ void Levels::check_win()
     }
 }
 
+/**
+ * @brief Levels::check_lose Verifica la cantidad de vidas del jugador para ver si ya perdio
+ */
 void Levels::check_lose()
 {
     if (pac_man->lifes == 0){
@@ -101,6 +111,9 @@ void Levels::check_lose()
     }
 }
 
+/**
+ * @brief Levels::check_collision Verifica la colision de el pacman con los objetos
+ */
 void Levels::check_collision()
 {
     QList<QGraphicsItem *> colliding_items = pac_man->collidingItems(); //List of the colliding items
@@ -130,6 +143,8 @@ void Levels::check_collision()
             }
             else {
                 ghost->revive();
+                points += 50;
+                points_label->setPlainText("Points: " + QString::number(points));
                 return;
             }
 
@@ -137,6 +152,9 @@ void Levels::check_collision()
     }
 }
 
+/**
+ * @brief Levels::check_ghost_collision Verfica la colision del fantasma con los objetos
+ */
 void Levels::check_ghost_collision()
 {
         QList<QGraphicsItem *> colliding_items_ghost = ghost->collidingItems();
@@ -149,6 +167,9 @@ void Levels::check_ghost_collision()
         }
 }
 
+/**
+ * @brief Levels::check_points Verifica la cantidad de putnos para poner una super pastilla
+ */
 void Levels::check_points()
 {
     if (points % 200 == 0){
@@ -166,6 +187,9 @@ void Levels::check_points()
     }
 }
 
+/**
+ * @brief Levels::set_pac_position Define la poscion de el pacman a los fantasmas
+ */
 void Levels::set_pac_position()
 {
     ghost->setPosX_Pacman(pac_man->position_x);
@@ -173,6 +197,9 @@ void Levels::set_pac_position()
     ghost->set_pac_direction(pac_man->direcction);
 }
 
+/**
+ * @brief Levels::init_level Inicia el laberinto con los obstaculos y las pastillas
+ */
 void Levels::init_level()
 {
 

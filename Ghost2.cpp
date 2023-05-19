@@ -2,6 +2,9 @@
 #include "AStar.h"
 #include <QTimer>
 
+/**
+ * @brief Ghost2::Ghost2 Constructor que crea un fantasma de color celeste apartir del nivel 2
+ */
 Ghost2::Ghost2()
 {
     setPixmap(QPixmap(":/Images/Ghost2D.png"));
@@ -20,6 +23,9 @@ Ghost2::Ghost2()
 
 }
 
+/**
+ * @brief Ghost2::super_pillow Metodo que pone vulnerable al fantasma cuando pacman se come la superpastilla
+ */
 void Ghost2::super_pillow()
 {
     superpillow = true;
@@ -29,16 +35,29 @@ void Ghost2::super_pillow()
     timer_super->start(3000);
 }
 
+
+/**
+ * @brief Ghost2::setPosX_Pacman Configura la varible de la posicion en x del pacaman
+ * @param posX_Pacman posicion en x del pac man
+ */
 void Ghost2::setPosX_Pacman(int posX_Pacman)
 {
     this->posX_Pacman = posX_Pacman;
 }
 
+/**
+ * @brief Ghost2::setPosY_Pacman Configura la variable de la posicion actuaal del pacman en el eje y
+ * @param posY_Pacman Posicion en el eje y
+ */
 void Ghost2::setPosY_Pacman(int posY_Pacman)
 {
     this->posY_Pacman = posY_Pacman;
 }
 
+/**
+ * @brief Ghost2::set_mapa Configura la varible del mapa al inicio de cada nivel
+ * @param mapa Mapa del laberinto
+ */
 void Ghost2::set_mapa(char mapa[21][30])
 {
     for (int i = 0;i < 21;i++){
@@ -49,11 +68,19 @@ void Ghost2::set_mapa(char mapa[21][30])
     setPos_to_pacman();
 }
 
+/**
+ * @brief Ghost2::set_pac_direction Configura la direccion del pacaman
+ * @param pac_direction direccion actual del pacman
+ */
 void Ghost2::set_pac_direction(char pac_direction)
 {
     this->pac_direction = pac_direction;
 }
 
+/**
+ * @brief Ghost2::setList Define la lista de el algoritmo a* en esta clase
+ * @param list lista del a*
+ */
 void Ghost2::setList(pair<int, int> list[])
 {
     for (int i = 0;i < 51;i++){
@@ -61,6 +88,9 @@ void Ghost2::setList(pair<int, int> list[])
     }
 }
 
+/**
+ * @brief Ghost2::setPos_to_pillow Define la posicion de la superpastilla para que el fantasma vaya hacia el
+ */
 void Ghost2::setPos_to_pillow(){
     // Source is the left-most bottom-most corner
     AStar::Pair src = make_pair(position_x, position_y);
@@ -71,6 +101,9 @@ void Ghost2::setPos_to_pillow(){
     setList(astar->list);
 }
 
+/**
+ * @brief Ghost2::revive Metodo que hace que el fantasma reviva
+ */
 void Ghost2::revive()
 {
     position_x = 1;
@@ -78,6 +111,7 @@ void Ghost2::revive()
     com_x = 0.0;
     com_y = 0.0;
     direcction = 'D';
+    superpillow = false;
 
     timer_move_to_pacman->stop();
     timer_move_to_pillow->stop();
@@ -92,6 +126,10 @@ void Ghost2::revive()
 
 
 }
+
+/**
+ * @brief Ghost2::move_to_pillow Define la posicion del pacman para que el fantasma vaya hacia el
+ */
 void Ghost2::move_to_pillow()
 {
     int posx = list[i].first - position_x;
@@ -151,6 +189,10 @@ void Ghost2::move_to_pillow()
 
 }
 
+
+/**
+ * @brief Ghost2::move_to_pacman Funcion que se mueve el fantasma en direccion al pacman
+ */
 void Ghost2::move_to_pacman()
 {
     int posx = list[i].first - position_x;
@@ -207,6 +249,10 @@ void Ghost2::move_to_pacman()
 
 }
 
+
+/**
+ * @brief Ghost2::setPos_to_pacman Define la poscion actual del pacman como obejtivo
+ */
 void Ghost2::setPos_to_pacman()
 {
     // Source is the left-most bottom-most corner
@@ -218,6 +264,9 @@ void Ghost2::setPos_to_pacman()
     setList(astar->list);
 }
 
+/**
+ * @brief Ghost2::quit_super_pillow Quita el efecto de superpastilla en el fantasma
+ */
 void Ghost2::quit_super_pillow()
 {
     setPixmap(QPixmap(":/Images/Ghost2D.png"));
@@ -225,6 +274,9 @@ void Ghost2::quit_super_pillow()
     timer_super->stop();
 }
 
+/**
+ * @brief Ghost2::change_pix Cambia las animaciones en timepo real
+ */
 void Ghost2::change_pix()
 {
     if (superpillow == true){

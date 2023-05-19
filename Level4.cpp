@@ -9,6 +9,10 @@
 #include "Win_WIndow.h"
 #include "Level4.h"
 
+/**
+ * @brief Level4::Level4 Construcotr que inicia la pantalla del juego
+ * @param parent Hace posible que se incie
+ */
 Level4::Level4(QWidget *parent)
 {
     //Creation and configuration of the scene
@@ -102,6 +106,9 @@ Level4::Level4(QWidget *parent)
 
 }
 
+/**
+ * @brief Level4::check_win Verifica si el jugador consiguio todas las pastillas para pasar de nivel
+ */
 void Level4::check_win()
 {
 
@@ -114,6 +121,9 @@ void Level4::check_win()
     }
 }
 
+/**
+ * @brief Level4::check_lose Verifica la cantidad de vidas del jugador para ver si ya perdio
+ */
 void Level4::check_lose()
 {
     if (pac_man->lifes <= 0){
@@ -126,6 +136,9 @@ void Level4::check_lose()
     }
 }
 
+/**
+ * @brief Level4::check_collision Verifica la colision de el pacman con los objetos
+ */
 void Level4::check_collision()
 {
     QList<QGraphicsItem *> colliding_items = pac_man->collidingItems(); //List of the colliding items
@@ -151,6 +164,9 @@ void Level4::check_collision()
     }
 }
 
+/**
+ * @brief Level4::check_ghost1_collision Verfica la colision del fantasma con los objetos
+ */
 void Level4::check_ghost1_collision()
 {
         QList<QGraphicsItem *> colliding_items_ghost = ghost1->collidingItems();
@@ -169,6 +185,8 @@ void Level4::check_ghost1_collision()
                 }
                 else {
                     ghost1->revive();
+                    points += 50;
+                    points_label->setPlainText("Points: " + QString::number(points));
                     return;
                 }
 
@@ -176,6 +194,9 @@ void Level4::check_ghost1_collision()
         }
 }
 
+/**
+ * @brief Level4::check_ghost2_collision Verfica la colision del fantasma con los objetos
+ */
 void Level4::check_ghost2_collision()
 {
         QList<QGraphicsItem *> colliding_items_ghost = ghost2->collidingItems();
@@ -194,6 +215,8 @@ void Level4::check_ghost2_collision()
                 }
                 else {
                     ghost2->revive();
+                    points += 50;
+                    points_label->setPlainText("Points: " + QString::number(points));
                     return;
                 }
 
@@ -201,7 +224,9 @@ void Level4::check_ghost2_collision()
         }
 }
 
-
+/**
+ * @brief Level4::check_ghost3_collision Verfica la colision del fantasma con los objetos
+ */
 void Level4::check_ghost3_collision()
 {
         QList<QGraphicsItem *> colliding_items_ghost = ghost3->collidingItems();
@@ -220,6 +245,8 @@ void Level4::check_ghost3_collision()
                 }
                 else {
                     ghost3->revive();
+                    points += 50;
+                    points_label->setPlainText("Points: " + QString::number(points));
                     return;
                 }
 
@@ -227,6 +254,9 @@ void Level4::check_ghost3_collision()
         }
 }
 
+/**
+ * @brief Level4::check_ghost4_collision Verfica la colision del fantasma con los objetos
+ */
 void Level4::check_ghost4_collision()
 {
         QList<QGraphicsItem *> colliding_items_ghost = ghost4->collidingItems();
@@ -245,6 +275,8 @@ void Level4::check_ghost4_collision()
                 }
                 else {
                     ghost4->revive();
+                    points += 50;
+                    points_label->setPlainText("Points: " + QString::number(points));
                     return;
                 }
 
@@ -252,12 +284,18 @@ void Level4::check_ghost4_collision()
         }
 }
 
-
+/**
+ * @brief Level4::setPoints Define los puntos actuales en una varible
+ * @param points Variable a definir
+ */
 void Level4::setPoints(int points)
 {
     this->points = points;
 }
 
+/**
+ * @brief Level4::ReviveGhosts Funcion que revive los fantasmas del nivel
+ */
 void Level4::ReviveGhosts()
 {
     ghost1->revive();
@@ -269,7 +307,9 @@ void Level4::ReviveGhosts()
     ghost4->revive();
 }
 
-
+/**
+ * @brief Level4::check_points Verifica la cantidad de putnos para poner una super pastilla
+ */
 void Level4::check_points()
 {
     if (points % 200 == 0){
@@ -295,6 +335,9 @@ void Level4::check_points()
     }
 }
 
+/**
+ * @brief Level4::set_pac_position Define la poscion de el pacman a los fantasmas
+ */
 void Level4::set_pac_position()
 {
     ghost1->setPosX_Pacman(pac_man->position_x);
@@ -314,6 +357,9 @@ void Level4::set_pac_position()
     ghost4->set_pac_direction(pac_man->direcction);
 }
 
+/**
+ * @brief Level4::init_level Inicia el laberinto con los obstaculos y las pastillas
+ */
 void Level4::init_level()
 {
 

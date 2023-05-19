@@ -4,11 +4,11 @@
 #include <QRectF>
 #include "Main_Window.h"
 #include "Levels.h"
-#include "Level2.h"
-#include "Level3.h"
-#include "Level4.h"
 
-
+/**
+ * @brief Main_Window::Main_Window Contructor que crea la ventana principal
+ * @param parent Hace posible que se cre la ventana
+ */
 Main_Window::Main_Window(QWidget *parent)
 {
     //Creation of the scene
@@ -25,17 +25,6 @@ Main_Window::Main_Window(QWidget *parent)
     scene->addItem(proxy_label);
     proxy_label->setPos(335, 20);
 
-    //Creation and configuration of easy mode button
-    /*
-    QPushButton * easy_mode = new QPushButton("Easy");
-    easy_mode->setGeometry(0,0,170,50);
-    QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget(); //Widget that makes posible to use a QPushButton in a QGraphicsscene
-    proxy->setWidget(easy_mode);
-    scene->addItem(proxy);
-    proxy->setPos(320,150);
-    */
-    //connect(easy_mode, &QPushButton::released, this, &Dificulties::easy); //Method that will activated when the button is released
-
     //Creaction and configuration of normal mode button
     QPushButton * play_button = new QPushButton("Play!");
     play_button->setGeometry(0,0,170,50);
@@ -43,18 +32,6 @@ Main_Window::Main_Window(QWidget *parent)
     proxy_normal->setWidget(play_button);
     scene->addItem(proxy_normal);
     proxy_normal->setPos(300,240);
-    //connect(normal_mode, &QPushButton::released, this, &Dificulties::normal); //Method that will activated when the button is released
-
-    //Creaction and configuration of hard mode button
-    /*
-    QPushButton * hard_mode = new QPushButton("Hard");
-    hard_mode->setGeometry(0,0,170,50);
-    QGraphicsProxyWidget *proxy_hard = new QGraphicsProxyWidget(); //Widget that makes posible to use a QPushButton in a QGraphicsscene
-    proxy_hard->setWidget(hard_mode);
-    scene->addItem(proxy_hard);
-    proxy_hard->setPos(320,330);
-    */
-    //connect(hard_mode, &QPushButton::released, this, &Dificulties::hard); //Method that will activated when the button is released
 
     //Configuration of the scene
     connect(play_button, &QPushButton::released, this, &Main_Window::game);
@@ -67,9 +44,12 @@ Main_Window::Main_Window(QWidget *parent)
     show();
 }
 
+/**
+ * @brief Main_Window::game Funcion que inicia el nivel 1
+ */
 void Main_Window::game()
 {
-    Level4 *level_1 = new Level4();
+    Levels *level_1 = new Levels();
     level_1->show();
     this->close();
 }

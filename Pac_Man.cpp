@@ -6,6 +6,9 @@
 
 int cycle = 0;
 
+/**
+ * @brief Pac_Man::Pac_Man Constructor que crea el objeto del pacman
+ */
 Pac_Man::Pac_Man()
 {
     setPixmap(QPixmap(":/Images/pac_man_0R.png"));
@@ -22,8 +25,10 @@ Pac_Man::Pac_Man()
     timer_animation_R->start(100); //Signal every 50 miliseconds
 }
 
-
-
+/**
+ * @brief Pac_Man::keyPressEvent Funcion que detecta las entradas del teclado para mover el pacman
+ * @param event Evento detectado
+ */
 void Pac_Man::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_W){
@@ -60,16 +65,28 @@ void Pac_Man::keyPressEvent(QKeyEvent *event)
     }
 }
 
+/**
+ * @brief Pac_Man::set_points_label Funcion que define la etiqueta de texto de los puntos
+ * @param points_label Etiqueta de texto
+ */
 void Pac_Man::set_points_label(QGraphicsTextItem *points_label)
 {
     this->points_label = points_label;
 }
 
+/**
+ * @brief Pac_Man::set_lifes_label Define la etiqueta de texto de las vidas
+ * @param lifes_label Etiqueta de las vidas
+ */
 void Pac_Man::set_lifes_label(QGraphicsTextItem *lifes_label)
 {
     this->lifes_label = lifes_label;
 }
 
+/**
+ * @brief Pac_Man::set_mapa Define el mapa en el objeto del pacman
+ * @param mapa LAberinto a definir
+ */
 void Pac_Man::set_mapa(char mapa[21][30])
 {
     for (int i = 0;i < 21;i++){
@@ -79,6 +96,9 @@ void Pac_Man::set_mapa(char mapa[21][30])
     }
 }
 
+/**
+ * @brief Pac_Man::revive Hace que el pacman reviva con la posicion ajustada
+ */
 void Pac_Man::revive()
 {
     timer_move->stop();
@@ -93,6 +113,9 @@ void Pac_Man::revive()
     timer_move->start();
 }
 
+/**
+ * @brief Pac_Man::move Funcion que hace posible que se mueva el pacman
+ */
 void Pac_Man::move()
 {
     if (direcction == 'R'){
@@ -137,6 +160,9 @@ void Pac_Man::move()
     }
 }
 
+/**
+ * @brief Pac_Man::animation_R Funcion de la animacion del movimiento a la derecha
+ */
 void Pac_Man::animation_R()
 {
     if (cycle == 0){
@@ -155,6 +181,9 @@ void Pac_Man::animation_R()
     }
 }
 
+/**
+ * @brief Pac_Man::animation_L Funcion de la animacion de movimiento a la izquierda
+ */
 void Pac_Man::animation_L()
 {
     if (cycle == 0){
@@ -173,6 +202,9 @@ void Pac_Man::animation_L()
     }
 }
 
+/**
+ * @brief Pac_Man::animation_U Funcion de la animacion del movimiento hacia arriba
+ */
 void Pac_Man::animation_U()
 {
     if (cycle == 0){
@@ -191,6 +223,9 @@ void Pac_Man::animation_U()
     }
 }
 
+/**
+ * @brief Pac_Man::animation_D Funcion de la animacion del movimiento hacia abajo
+ */
 void Pac_Man::animation_D()
 {
     if (cycle == 0){

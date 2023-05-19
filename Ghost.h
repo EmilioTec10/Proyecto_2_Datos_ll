@@ -17,10 +17,10 @@ public:
     void setPosX_Pacman(int posX_Pacman);
     void setPosY_Pacman(int posY_Pacman);
     void set_mapa(char mapa[21][30]);
-    void set_pac_direction(char pac_direction);
     void setList(pair<int,int> list[51]);
     void setPos_to_pillow();
     void revive();
+    void set_pac_direction(char pac_direction);
 
     QTimer *timer_super;
     QTimer *set_to_pacman;
