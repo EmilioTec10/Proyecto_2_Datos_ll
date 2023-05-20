@@ -1,6 +1,7 @@
 #include "Ghost2.h"
 #include "AStar.h"
 #include <QTimer>
+#include <QGraphicsScene>
 
 /**
  * @brief Ghost2::Ghost2 Constructor que crea un fantasma de color celeste apartir del nivel 2
@@ -89,6 +90,7 @@ void Ghost2::setList(pair<int, int> list[])
 }
 
 /**
+    m_scene->addItem(this);
  * @brief Ghost2::setPos_to_pillow Define la posicion de la superpastilla para que el fantasma vaya hacia el
  */
 void Ghost2::setPos_to_pillow(){
@@ -104,7 +106,7 @@ void Ghost2::setPos_to_pillow(){
 /**
  * @brief Ghost2::revive Metodo que hace que el fantasma reviva
  */
-void Ghost2::revive()
+void Ghost2::revive2()
 {
     position_x = 1;
     position_y = 1;
@@ -124,7 +126,28 @@ void Ghost2::revive()
     timer_move_to_pacman->start(70);
     timer_animation->start(70);
 
+    m_scene->addItem(this);
+}
 
+void Ghost2::revive1()
+{
+    position_x = 1;
+    position_y = 1;
+    com_x = 0.0;
+    com_y = 0.0;
+    direcction = 'D';
+    superpillow = false;
+
+    timer_move_to_pacman->stop();
+    timer_move_to_pillow->stop();
+    timer_animation->stop();
+    setPos_to_pacman();
+    qDebug() << posX_Pacman << ", " << posY_Pacman;
+    setPos(30,30);
+
+
+    timer_move_to_pacman->start(70);
+    timer_animation->start(70);
 }
 
 /**

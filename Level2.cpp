@@ -62,14 +62,21 @@ Level2::Level2(QWidget *parent)
     lifes_label->setFont(font);
     lifes_label->setDefaultTextColor(Qt::red);
 
+    level_label = new QGraphicsTextItem("Level: " + QString::number(level));
+    level_label->setFont(font);
+    level_label->setDefaultTextColor(Qt::red);
+
     scene->addItem(pac_man);
     scene->addItem(ghost_1);
     scene->addItem(ghost_2);
     scene->addItem(points_label);
     scene->addItem(lifes_label);
+    scene->addItem(level_label);
 
     points_label->setPos(720,590);
     lifes_label->setPos(600,590);
+    level_label->setPos(480,593);
+    ghost_1->setScene(scene);
     ghost_1->setPos(810,30);
     ghost_1->set_mapa(mapa);
     ghost_2->setPos(90,30);
@@ -174,7 +181,9 @@ void Level2::check_ghost1_collision()
                     return;
                 }
                 else {
-                    ghost_1->revive();
+                    scene->removeItem(ghost_1);
+                    connect(ghost_1->timer_revive,SIGNAL(timeout()),ghost_1,SLOT(revive1()));
+                    ghost_1->timer_revive->start(5000);
                     points += 50;
                     points_label->setPlainText("Points: " + QString::number(points));
                     return;
@@ -204,13 +213,15 @@ void Level2::check_ghost2_collision()
                     return;
                 }
                 else {
-                    ghost_2->revive();
+                    scene->removeItem(ghost_2);
+                    connect(ghost_2->timer_revive,SIGNAL(timeout()),ghost_2,SLOT(revive1()));
+                    ghost_2->timer_revive->start(5000);
                     points += 50;
                     points_label->setPlainText("Points: " + QString::number(points));
                     return;
                 }
 
-            }
+            }void revive1();
         }
 }
 
@@ -224,6 +235,7 @@ void Level2::check_points()
         SuperDot *super_dot = new SuperDot();
         scene->addItem(super_dot);
         super_dot->setPos(420,600/2);
+        points += 10;
         //ghost->set_to_pacman->stop();
 
         ghost_1->timer_move_to_pacman->stop();
@@ -256,8 +268,8 @@ void Level2::set_pac_position()
  */
 void Level2::ReviveGhosts()
 {
-    ghost_1->revive();
-    ghost_2->revive();
+    ghost_1->revive2();
+    ghost_2->revive2();
 }
 
 /**

@@ -1,6 +1,7 @@
 #include "Ghost.h"
 #include "AStar.h"
 #include <QTimer>
+#include <QGraphicsScene>
 
 /**
  * @brief Ghost::Ghost Constructor que crea un fantasma de color rojo apartir del nivel 1
@@ -19,7 +20,7 @@ Ghost::Ghost()
 
     timer_animation = new QTimer;
     connect(timer_animation,SIGNAL(timeout()),this,SLOT(change_pix())); //conect method that repeats the method everytime it recives the signal
-    timer_animation->start(70); //Signal every 50 miliseconds
+    timer_animation->start(70); //Signal every 50 mil
 
 }
 
@@ -100,16 +101,22 @@ void Ghost::setPos_to_pillow(){
     setList(astar->list);
 }
 
+void Ghost::setScene(QGraphicsScene *scene) {
+       m_scene = scene;
+   }
+
+
 /**
  * @brief Ghost::revive Metodo que hace que el fantasma reviva
  */
-void Ghost::revive()
+void Ghost::revive1()
 {
     position_x = 1;
     position_y = 27;
     com_x = 0.0;
     com_y = 0.0;
     direcction = 'L';
+
     superpillow = false;
 
     timer_move_to_pacman->stop();
@@ -121,8 +128,32 @@ void Ghost::revive()
 
     timer_move_to_pacman->start(70);
     timer_animation->start(70);
+    timer_revive->stop();
+
+    m_scene->addItem(this);
+
+}
+
+void Ghost::revive2()
+{
+    position_x = 1;
+    position_y = 27;
+    com_x = 0.0;
+    com_y = 0.0;
+    direcction = 'L';
+
+    superpillow = false;
+
+    timer_move_to_pacman->stop();
+    timer_move_to_pillow->stop();
+    timer_animation->stop();
+    setPos_to_pacman();
+    setPos(810,30);
 
 
+    timer_move_to_pacman->start(70);
+    timer_animation->start(70);
+    timer_revive->stop();
 }
 
 /**

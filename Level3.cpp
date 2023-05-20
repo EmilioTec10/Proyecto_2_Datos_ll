@@ -67,15 +67,22 @@ Level3::Level3(QWidget *parent)
     lifes_label->setFont(font);
     lifes_label->setDefaultTextColor(Qt::red);
 
+    level_label = new QGraphicsTextItem("Level: " + QString::number(level));
+    level_label->setFont(font);
+    level_label->setDefaultTextColor(Qt::red);
+
     scene->addItem(pac_man);
     scene->addItem(ghost1);
     scene->addItem(ghost2);
     scene->addItem(ghost3);
     scene->addItem(points_label);
     scene->addItem(lifes_label);
+    scene->addItem(level_label);
 
     points_label->setPos(720,590);
     lifes_label->setPos(600,590);
+    level_label->setPos(480,593);
+    ghost1->setScene(scene);
     ghost1->setPos(810,30);
     ghost1->set_mapa(mapa);
     ghost2->setPos(90,30);
@@ -175,7 +182,9 @@ void Level3::check_ghost1_collision()
                     return;
                 }
                 else {
-                    ghost1->revive();
+                    scene->removeItem(ghost1);
+                    connect(ghost1->timer_revive,SIGNAL(timeout()),ghost1,SLOT(revive1()));
+                    ghost1->timer_revive->start(5000);
                     points += 50;
                     points_label->setPlainText("Points: " + QString::number(points));
                     return;
@@ -205,7 +214,9 @@ void Level3::check_ghost2_collision()
                     return;
                 }
                 else {
-                    ghost2->revive();
+                    scene->removeItem(ghost2);
+                    connect(ghost2->timer_revive,SIGNAL(timeout()),ghost2,SLOT(revive1()));
+                    ghost2->timer_revive->start(5000);
                     points += 50;
                     points_label->setPlainText("Points: " + QString::number(points));
                     return;
@@ -235,7 +246,9 @@ void Level3::check_ghost3_collision()
                     return;
                 }
                 else {
-                    ghost3->revive();
+                    scene->removeItem(ghost3);
+                    connect(ghost3->timer_revive,SIGNAL(timeout()),ghost3,SLOT(revive1()));
+                    ghost3->timer_revive->start(5000);
                     points += 50;
                     points_label->setPlainText("Points: " + QString::number(points));
                     return;
@@ -259,11 +272,11 @@ void Level3::setPoints(int points)
  */
 void Level3::ReviveGhosts()
 {
-    ghost1->revive();
+    ghost1->revive2();
 
-    ghost2->revive();
+    ghost2->revive2();
 
-    ghost3->revive();
+    ghost3->revive2();
 }
 
 /**
@@ -276,6 +289,7 @@ void Level3::check_points()
         SuperDot *super_dot = new SuperDot();
         scene->addItem(super_dot);
         super_dot->setPos(420,600/2);
+        points += 10;
         //ghost->set_to_pacman->stop();
 
         ghost1->timer_move_to_pacman->stop();

@@ -67,6 +67,7 @@ public:
 
     QGraphicsTextItem *points_label;
     QGraphicsTextItem *lifes_label;
+    QGraphicsTextItem *level_label;
 
     QGraphicsScene * scene;
 
@@ -83,7 +84,7 @@ public slots:
 private:
     int pillows = 0;
     int points = 0;
-    int level = 2;
+    int level = 4;
     void init_level();
     void changemap();
 };

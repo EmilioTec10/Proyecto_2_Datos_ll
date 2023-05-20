@@ -1,6 +1,7 @@
 #include "Ghost4.h"
 #include "AStar.h"
 #include <QTimer>
+#include <QGraphicsScene>
 
 /**
  * @brief Ghost4::Ghost4 Constructor que crea un fantasma de color rosado apartir del nivel 4
@@ -103,7 +104,7 @@ void Ghost4::setPos_to_pillow(){
 /**
  * @brief Ghost4::revive Metodo que hace que el fantasma reviva
  */
-void Ghost4::revive()
+void Ghost4::revive1()
 {
     position_x = 18;
     position_y = 3;
@@ -123,7 +124,29 @@ void Ghost4::revive()
     timer_move_to_pacman->start(70);
     timer_animation->start(70);
 
+    m_scene->addItem(this);
+}
 
+
+void Ghost4::revive2()
+{
+    position_x = 18;
+    position_y = 3;
+    com_x = 0.0;
+    com_y = 0.0;
+    direcction = 'D';
+    superpillow = false;
+
+    timer_move_to_pacman->stop();
+    timer_move_to_pillow->stop();
+    timer_animation->stop();
+    setPos_to_pacman();
+    qDebug() << posX_Pacman << ", " << posY_Pacman;
+    setPos(90,540);
+
+
+    timer_move_to_pacman->start(70);
+    timer_animation->start(70);
 }
 
 /**

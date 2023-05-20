@@ -61,6 +61,7 @@ public:
 
     QGraphicsTextItem *points_label;
     QGraphicsTextItem *lifes_label;
+    QGraphicsTextItem *level_label;
 
     QGraphicsScene * scene;
 

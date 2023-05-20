@@ -1,6 +1,7 @@
 #include "Ghost3.h"
 #include "AStar.h"
 #include <QTimer>
+#include <QGraphicsScene>
 
 /**
  * @brief Ghost3::Ghost3 Constructor que crea un fantasma de color naranja apartir del nivel 3
@@ -104,7 +105,7 @@ void Ghost3::setPos_to_pillow(){
 /**
  * @brief Ghost3::revive Metodo que hace que el fantasma reviva
  */
-void Ghost3::revive()
+void Ghost3::revive1()
 {
     position_x = 18;
     position_y = 27;
@@ -124,7 +125,29 @@ void Ghost3::revive()
     timer_move_to_pacman->start(70);
     timer_animation->start(70);
 
+    m_scene->addItem(this);
+}
 
+
+void Ghost3::revive2()
+{
+    position_x = 18;
+    position_y = 27;
+    com_x = 0.0;
+    com_y = 0.0;
+    direcction = 'D';
+    superpillow = false;
+
+    timer_move_to_pacman->stop();
+    timer_move_to_pillow->stop();
+    timer_animation->stop();
+    setPos_to_pacman();
+    qDebug() << posX_Pacman << ", " << posY_Pacman;
+    setPos(810,540);
+
+
+    timer_move_to_pacman->start(70);
+    timer_animation->start(70);
 }
 
 /**

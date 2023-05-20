@@ -2,7 +2,9 @@
 #define GHOST_H
 
 #include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 #include <QObject>
+#include <QTimer>
 #include "AStar.h"
 
 class Ghost:public QObject , public  QGraphicsPixmapItem{
@@ -19,14 +21,16 @@ public:
     void set_mapa(char mapa[21][30]);
     void setList(pair<int,int> list[51]);
     void setPos_to_pillow();
-    void revive();
     void set_pac_direction(char pac_direction);
+    void setScene(QGraphicsScene *scene);
+    void revive2();
 
     QTimer *timer_super;
     QTimer *set_to_pacman;
     QTimer *timer_move_to_pacman;
     QTimer *timer_move_to_pillow;
     QTimer *timer_animation;
+    QTimer *timer_revive = new QTimer();
 
     AStar *astar = new AStar();
 
@@ -38,6 +42,7 @@ public slots:
     void move_to_pillow();
     void quit_super_pillow();
     void change_pix();
+    void revive1();
 private:
     int posX_Pacman = 10;
     int posY_Pacman = 14;
@@ -48,6 +53,7 @@ private:
     int position_y = 27;
     char mapa[21][30];
     pair<int,int> list[51];
+    QGraphicsScene *m_scene;
 };
 
 #endif // GHOST_H

@@ -57,13 +57,20 @@ Levels::Levels(QWidget *parent)
     lifes_label->setFont(font);
     lifes_label->setDefaultTextColor(Qt::red);
 
+    level_label = new QGraphicsTextItem("Level: " + QString::number(level));
+    level_label->setFont(font);
+    level_label->setDefaultTextColor(Qt::red);
+
     scene->addItem(pac_man);
     scene->addItem(ghost);
     scene->addItem(points_label);
     scene->addItem(lifes_label);
+    scene->addItem(level_label);
 
-    points_label->setPos(720,590);
-    lifes_label->setPos(600,590);
+    points_label->setPos(720,593);
+    lifes_label->setPos(600,593);
+    level_label->setPos(480,593);
+    ghost->setScene(scene);
     ghost->setPos(810,30);
     ghost->set_mapa(mapa);
 
@@ -137,12 +144,14 @@ void Levels::check_collision()
         else if (typeid(*(colliding_items[i])) == typeid(Ghost)){
             if (ghost->superpillow == false){
                 pac_man->revive();
-                ghost->revive();
+                ghost->revive2();
                 lifes_label->setPlainText("Lifes: " + QString::number(pac_man->lifes));
                 return;
             }
             else {
-                ghost->revive();
+                scene->removeItem(ghost);
+                connect(ghost->timer_revive,SIGNAL(timeout()),ghost,SLOT(revive1()));
+                ghost->timer_revive->start(5000);
                 points += 50;
                 points_label->setPlainText("Points: " + QString::number(points));
                 return;
@@ -177,7 +186,7 @@ void Levels::check_points()
         SuperDot *super_dot = new SuperDot();
         scene->addItem(super_dot);
         super_dot->setPos(420,600/2);
-        //ghost->set_to_pacman->stop();
+        points += 10;
 
         ghost->timer_move_to_pacman->stop();
         ghost->setPos_to_pillow();
