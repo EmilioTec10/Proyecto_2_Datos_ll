@@ -69,6 +69,7 @@ void Velocimeter::SocketServer() {
         return;
     }
 
+
     const char* delimiter = "\n";
 
     //std::cout<< "ESTA ES LA DATA 1"<<data1;
@@ -84,18 +85,20 @@ void Velocimeter::SocketServer() {
     }
 
 
-    std::cout<<"este es el primero: "<<primerDato << std::endl;
+    std::cout<<"este es el primero: "<<primerDato[0] << std::endl;
 
-    std::cout<<"este es el segundo: "<<segundoDato << std::endl;
+    std::cout<<"este es el segundo: "<<segundoDato[0] << std::endl;
+
+
 
   //  std::cout <<buffer<< std::endl;
 
 
 
-    char respuestaa[] = "40,50,60";
+    char respuestaa[] = "0,1,3";
     //std::cout<<"este es el life "<<lifes<< "este es el point "<<points<<"este es el lvl "<<level;
     //respuestaa[0] = lifes;
-    //respuestaa[1] = points;
+    //respuestaa[0] = points;
     //respuestaa[2] = level;
 
     send(new_socket, respuestaa, sizeof(respuestaa), 0);
@@ -106,6 +109,9 @@ void Velocimeter::SocketServer() {
     //recv(new_socket, buffer, sizeof(buffer), 0);
     //std::cout << "Dato recibido: " << buffer << std::endl;
 
+    //setX(primerDato[0]);
+    //setY(segundoDato[0]);
+
     if (close(server_fd) == -1) {
         std::cerr << "Error al cerrar el socket: " << std::strerror(errno) << std::endl;
         return;
@@ -114,6 +120,7 @@ void Velocimeter::SocketServer() {
         std::cerr << "Error al cerrar el socket: " << std::strerror(errno) << std::endl;
         return;
     }
+
 }
 void Velocimeter::setPoints(char points){
     this->points = points;
@@ -123,4 +130,10 @@ void Velocimeter::setLifes(char lifes){
 }
 void Velocimeter::setLevel(char level){
     this->level = level;
+}
+void Velocimeter::setX(char x){
+    this ->primerDato = x;
+}
+void Velocimeter::setY(char y){
+    this->segundoDato = y;
 }

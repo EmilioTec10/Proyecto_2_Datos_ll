@@ -6,10 +6,12 @@
 
 class Velocimeter {
 public:
-   char primerDato[1024];
-   char segundoDato[1024];
+   char primerDato;
+   char segundoDato;
 public slots:
     void SocketServer();
+    void setX(char x);
+    void setY(char y);
     void setLevel(char level);
     void setPoints(char points);
     void setLifes(char lifes);
